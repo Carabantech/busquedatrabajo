@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebastian Mauricio Carabante - CV</title>
+<style>
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin.woff2') format('woff2');
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #1a1a2e;
+    background: #ffffff;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 2px 0;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .header-gradient {
+    height: 2px;
+    background: linear-gradient(to right, hsl(187, 74%, 32%), hsl(270, 70%, 45%));
+    border-radius: 1px;
+    margin-bottom: 10px;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: #555;
+  }
+
+  .contact-row a {
+    color: #555;
+    text-decoration: none;
+  }
+
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(187, 74%, 32%);
+    border-bottom: 1.5px solid #e2e2e2;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .summary-text {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #2f2f2f;
+  }
+
+  .competencies-grid,
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .competency-tag {
+    font-size: 10px;
+    font-weight: 500;
+    color: hsl(187, 74%, 28%);
+    background: hsl(187, 40%, 95%);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid hsl(187, 40%, 88%);
+  }
+
+  .job, .project, .edu-item, .cert-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .job {
+    margin-bottom: 14px;
+  }
+
+  .job-header, .edu-header, .cert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .job-company, .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: hsl(270, 70%, 45%);
+  }
+
+  .job-period, .edu-year {
+    font-size: 10px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .job-role, .edu-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .job-location, .edu-desc, .project-desc, .project-tech {
+    font-size: 10px;
+    color: #666;
+  }
+
+  ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+
+  li {
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .project {
+    margin-bottom: 12px;
+  }
+
+  .project-desc {
+    margin-top: 3px;
+    line-height: 1.55;
+  }
+
+  .edu-item {
+    margin-bottom: 8px;
+  }
+
+  .edu-org, .cert-org {
+    color: hsl(270, 70%, 45%);
+    font-weight: 500;
+  }
+
+  .cert-title, .skill-item {
+    font-size: 10.5px;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>Sebastian Mauricio Carabante</h1>
+    <div class="header-gradient"></div>
+    <div class="contact-row">
+      <span>+54 261 4677804</span>
+      <span>carabante@outlook.com</span>
+      <a href="https://www.linkedin.com/in/sebastian-mauricio-c-a6123635/">linkedin.com/in/sebastian-mauricio-c-a6123635</a>
+      <span>Godoy Cruz, Mendoza, Argentina</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Professional Summary</div>
+    <div class="summary-text">
+      Senior IT Manager with 15+ years of experience leading internal IT operations, infrastructure, technical support,
+      and systems reliability across regional environments. Strong background in user support, security controls,
+      access management, vendor coordination, and process improvement, with hands-on experience across Windows, Linux,
+      networks, virtualization, and business-critical operations. Proven ability to keep systems secure, organized,
+      and scalable while partnering with leadership and distributed teams across international environments.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Core Competencies</div>
+    <div class="competencies-grid">
+      <span class="competency-tag">IT operations leadership</span>
+      <span class="competency-tag">Internal IT support</span>
+      <span class="competency-tag">Systems administration</span>
+      <span class="competency-tag">Infrastructure management</span>
+      <span class="competency-tag">Technical troubleshooting</span>
+      <span class="competency-tag">Access control and security</span>
+      <span class="competency-tag">User support operations</span>
+      <span class="competency-tag">Vendor management</span>
+      <span class="competency-tag">Process improvement</span>
+      <span class="competency-tag">KPI reporting</span>
+      <span class="competency-tag">Windows environments</span>
+      <span class="competency-tag">Networking</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Work Experience</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">CME - Wakapi</div>
+        <div class="job-period">2018 - Present</div>
+      </div>
+      <div class="job-role">IT Manager Senior LATAM</div>
+      <div class="job-location">Mendoza, Argentina</div>
+      <ul>
+        <li>Lead internal IT and infrastructure operations across LATAM, coordinating teams and stakeholders in Argentina, the United States, and Lebanon.</li>
+        <li>Manage technology operations with focus on systems reliability, support continuity, security practices, and operational scalability.</li>
+        <li>Own vendor management, hardware/software purchasing, and high-impact operational decisions aligned with business needs.</li>
+        <li>Drive process improvement across infrastructure, collaboration systems, and day-to-day IT operations.</li>
+        <li>Track KPIs and provide executive reporting to support leadership decisions and operational planning.</li>
+        <li>Evaluate and implement new technologies to improve collaboration, efficiency, and service reliability.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">Cencosud S.A.</div>
+        <div class="job-period">2011 - 2016</div>
+      </div>
+      <div class="job-role">Head of Technical Support and Management - Cuyo Region</div>
+      <div class="job-location">Mendoza, Argentina</div>
+      <ul>
+        <li>Coordinated regional technical support operations for internal users across the Cuyo region.</li>
+        <li>Oversaw server, network, and endpoint support to maintain business continuity and reliable day-to-day operations.</li>
+        <li>Produced operational reports and evaluated information systems to improve visibility and support quality.</li>
+        <li>Supported multi-site technical operations in Argentina and Chile, resolving infrastructure and user-facing issues.</li>
+        <li>Contributed as project lead within broader internal support and technology initiatives.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">Foptik S.A.</div>
+        <div class="job-period">2016 - 2018</div>
+      </div>
+      <div class="job-role">IT Project Director</div>
+      <div class="job-location">Mendoza, Argentina</div>
+      <ul>
+        <li>Directed IT and telecommunications projects from planning through execution.</li>
+        <li>Coordinated technical teams and providers to keep systems, connectivity, and implementation aligned with operational requirements.</li>
+        <li>Managed infrastructure, servers, and security-related initiatives across business environments.</li>
+        <li>Led large-scale connectivity and infrastructure projects, including EDUC.AR and Autodromo Villicum.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">DirecTV Argentina S.A.</div>
+        <div class="job-period">2007 - 2011</div>
+      </div>
+      <div class="job-role">Field Support and Service Coordinator</div>
+      <div class="job-location">Buenos Aires, Argentina</div>
+      <ul>
+        <li>Coordinated technical works and service operations in a high-demand environment.</li>
+        <li>Managed service quality, installer performance, and issue follow-up to sustain operational continuity.</li>
+        <li>Supported infrastructure and field service delivery across distributed operations.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">IR Comunicaciones</div>
+        <div class="job-period">2001 - 2007</div>
+      </div>
+      <div class="job-role">Telecommunications Technician</div>
+      <div class="job-location">Mendoza / Buenos Aires, Argentina</div>
+      <ul>
+        <li>Implemented CTI systems and WAN/LAN networks.</li>
+        <li>Installed and maintained Linux and Windows servers, connectivity solutions, and telecom infrastructure.</li>
+        <li>Troubleshot network and systems issues in field and operational environments.</li>
+        <li>Led technical staff on deployments and infrastructure works.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Projects</div>
+    <div class="project">
+      <div class="project-title">CME Global Digital Collaboration Initiative</div>
+      <div class="project-desc">Led implementation of AI-enabled conference room capabilities, including real-time translation, subtitles, meeting summaries, and action-item generation.</div>
+    </div>
+    <div class="project">
+      <div class="project-title">Autodromo Villicum - San Juan</div>
+      <div class="project-desc">Directed delivery of fiber-optic network deployment, high-availability interconnections, and supporting infrastructure.</div>
+    </div>
+    <div class="project">
+      <div class="project-title">EDUC.AR Network - Parana and Mendoza</div>
+      <div class="project-desc">Directed a multi-site connectivity project for educational institutions, leading network design and team coordination.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">Technical Degree in New Technology Administration <span class="edu-org">- Fundacion Universitas</span></div>
+        <div class="edu-year">2021 - 2023</div>
+      </div>
+      <div class="edu-desc">Mendoza, Argentina</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">Diploma in Negotiation <span class="edu-org">- Fundacion ANDEN</span></div>
+        <div class="edu-year">2010 - 2011</div>
+      </div>
+      <div class="edu-desc">Mendoza, Argentina</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">Bachelor's Degree in Telecommunications <span class="edu-org">- Universidad de Belgrano</span></div>
+        <div class="edu-year">1999 - 2003</div>
+      </div>
+      <div class="edu-desc">Incomplete</div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">Electronics and Systems Technician <span class="edu-org">- Colegio Capitan Daniel Manzotti</span></div>
+        <div class="edu-year">1991 - 1997</div>
+      </div>
+      <div class="edu-desc">Mendoza, Argentina</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Certifications</div>
+    <div class="cert-item"><div class="cert-title">AWS Technical Essentials</div></div>
+    <div class="cert-item"><div class="cert-title">Architecting on AWS</div></div>
+    <div class="cert-item"><div class="cert-title">Microsoft MCSA - Windows Server 2016</div></div>
+    <div class="cert-item"><div class="cert-title">MS-20740 - Windows Server 2016</div></div>
+    <div class="cert-item"><div class="cert-title">MS-20741 - Networking with Windows Server 2016</div></div>
+    <div class="cert-item"><div class="cert-title">Microsoft Azure Data Fundamentals (DP-900)</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <span class="skill-item">Windows Server</span>
+      <span class="skill-item">Linux</span>
+      <span class="skill-item">VMware ESXi</span>
+      <span class="skill-item">vSphere</span>
+      <span class="skill-item">vCenter</span>
+      <span class="skill-item">Networking</span>
+      <span class="skill-item">Routing and switching</span>
+      <span class="skill-item">Firewalls</span>
+      <span class="skill-item">LAN/WAN</span>
+      <span class="skill-item">FTTH/GPON</span>
+      <span class="skill-item">Data centers</span>
+      <span class="skill-item">High availability</span>
+      <span class="skill-item">Cybersecurity</span>
+      <span class="skill-item">Structured cabling</span>
+      <span class="skill-item">Fiber optics</span>
+      <span class="skill-item">AWS</span>
+      <span class="skill-item">Azure</span>
+      <span class="skill-item">Spanish: Native</span>
+      <span class="skill-item">English: Technical working proficiency</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

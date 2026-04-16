@@ -1,0 +1,62 @@
+candidate:
+  full_name: "Sebastián Mauricio Carabante"
+  email: "carabante@outlook.com"
+  phone: "+54 261 4677804"
+  location: "Godoy Cruz, Mendoza, Argentina"
+  linkedin: "linkedin.com/in/sebastian-mauricio-c-a6123635"
+  portfolio_url: ""
+  github: ""
+  twitter: ""
+
+target_roles:
+  primary:
+    - "IT Operations Manager"
+    - "IT Manager"
+    - "Head of IT"
+  archetypes:
+    - name: "IT Operations Manager"
+      level: "Senior"
+      fit: "primary"
+    - name: "IT Manager"
+      level: "Senior"
+      fit: "secondary"
+    - name: "Head of IT"
+      level: "Senior"
+      fit: "secondary"
+    - name: "Cloud Infrastructure Manager"
+      level: "Senior"
+      fit: "adjacent"
+    - name: "Infrastructure Manager"
+      level: "Senior"
+      fit: "secondary"
+
+narrative:
+  headline: "Senior IT Manager focused on infrastructure, cloud, networking, and regional operations"
+  exit_story: "15+ years leading infrastructure, telecom, and IT operations across LATAM, with hands-on experience in high-availability environments, vendor management, and technology modernization."
+  superpowers:
+    - "Regional IT infrastructure leadership"
+    - "High-availability networks and systems"
+    - "Vendor negotiation and budget ownership"
+    - "Cross-functional coordination across LATAM and global teams"
+  proof_points:
+    - name: "CME LATAM Infrastructure Leadership"
+      url: ""
+      hero_metric: "Led regional IT and infrastructure operations across LATAM with executive reporting to CEO and COO"
+    - name: "AI-enabled Collaboration Rollout"
+      url: ""
+      hero_metric: "Implemented AI-based meeting translation, summaries, and action-item generation for multinational collaboration"
+    - name: "Autódromo Villicum"
+      url: ""
+      hero_metric: "Directed fiber network, connectivity, and high-availability infrastructure delivery"
+
+compensation:
+  target_range: "$45K+"
+  currency: "USD"
+  minimum: "$40K"
+  location_flexibility: "Remote preferred, hybrid in Mendoza is OK, travel is OK, relocation is not preferred"
+
+location:
+  country: "Argentina"
+  city: "Godoy Cruz, Mendoza"
+  timezone: "America/Argentina/Mendoza"
+  visa_status: "Prefer remote or contractor arrangements for international roles; no relocation"
