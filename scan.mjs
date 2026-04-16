@@ -1,48 +1,47 @@
 #!/usr/bin/env node
 
 /**
- * scan.mjs — Zero-token portal scanner
+ * scan.mjs - Zero-token portal scanner
  *
- * Fetches Greenhouse, Ashby, and Lever APIs directly, applies title
- * filters from portals.yml, deduplicates against existing history,
- * and appends new offers to pipeline.md + scan-history.tsv.
- *
- * Zero Claude API tokens — pure HTTP + JSON.
+ * Fetches Greenhouse, Ashby, and Lever APIs directly, optionally augments
+ * discovery through configured search_queries, applies title filters from
+ * portals.yml, deduplicates against existing history, and appends new offers
+ * to pipeline.md + scan-history.tsv.
  *
  * Usage:
- *   node scan.mjs                  # scan all enabled companies
- *   node scan.mjs --dry-run        # preview without writing files
- *   node scan.mjs --company Cohere # scan a single company
+ *   node scan.mjs
+ *   node scan.mjs --dry-run
+ *   node scan.mjs --company Cohere
  */
 
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'fs';
 import yaml from 'js-yaml';
-const parseYaml = yaml.load;
 
-// ── Config ──────────────────────────────────────────────────────────
+const parseYaml = yaml.load;
 
 const PORTALS_PATH = 'portals.yml';
 const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
 const PIPELINE_PATH = 'data/pipeline.md';
 const APPLICATIONS_PATH = 'data/applications.md';
 
-// Ensure required directories exist (fresh setup)
 mkdirSync('data', { recursive: true });
 
 const CONCURRENCY = 10;
 const FETCH_TIMEOUT_MS = 10_000;
-
-// ── API detection ───────────────────────────────────────────────────
+const SEARCH_RESULTS_PER_QUERY = 8;
+const SEARCH_CONCURRENCY = 4;
+const DEFAULT_HEADERS = {
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+  'accept-language': 'en-US,en;q=0.9,es;q=0.8',
+};
 
 function detectApi(company) {
-  // Greenhouse: explicit api field
   if (company.api && company.api.includes('greenhouse')) {
     return { type: 'greenhouse', url: company.api };
   }
 
   const url = company.careers_url || '';
 
-  // Ashby
   const ashbyMatch = url.match(/jobs\.ashbyhq\.com\/([^/?#]+)/);
   if (ashbyMatch) {
     return {
@@ -51,7 +50,6 @@ function detectApi(company) {
     };
   }
 
-  // Lever
   const leverMatch = url.match(/jobs\.lever\.co\/([^/?#]+)/);
   if (leverMatch) {
     return {
@@ -60,59 +58,59 @@ function detectApi(company) {
     };
   }
 
-  // Greenhouse EU boards
-  const ghEuMatch = url.match(/job-boards(?:\.eu)?\.greenhouse\.io\/([^/?#]+)/);
-  if (ghEuMatch && !company.api) {
+  const greenhouseMatch = url.match(/job-boards(?:\.eu)?\.greenhouse\.io\/([^/?#]+)/);
+  if (greenhouseMatch && !company.api) {
     return {
       type: 'greenhouse',
-      url: `https://boards-api.greenhouse.io/v1/boards/${ghEuMatch[1]}/jobs`,
+      url: `https://boards-api.greenhouse.io/v1/boards/${greenhouseMatch[1]}/jobs`,
     };
   }
 
   return null;
 }
 
-// ── API parsers ─────────────────────────────────────────────────────
-
 function parseGreenhouse(json, companyName) {
   const jobs = json.jobs || [];
-  return jobs.map(j => ({
-    title: j.title || '',
-    url: j.absolute_url || '',
+  return jobs.map(job => ({
+    title: job.title || '',
+    url: job.absolute_url || '',
     company: companyName,
-    location: j.location?.name || '',
+    location: job.location?.name || '',
   }));
 }
 
 function parseAshby(json, companyName) {
   const jobs = json.jobs || [];
-  return jobs.map(j => ({
-    title: j.title || '',
-    url: j.jobUrl || '',
+  return jobs.map(job => ({
+    title: job.title || '',
+    url: job.jobUrl || '',
     company: companyName,
-    location: j.location || '',
+    location: job.location || '',
   }));
 }
 
 function parseLever(json, companyName) {
   if (!Array.isArray(json)) return [];
-  return json.map(j => ({
-    title: j.text || '',
-    url: j.hostedUrl || '',
+  return json.map(job => ({
+    title: job.text || '',
+    url: job.hostedUrl || '',
     company: companyName,
-    location: j.categories?.location || '',
+    location: job.categories?.location || '',
   }));
 }
 
-const PARSERS = { greenhouse: parseGreenhouse, ashby: parseAshby, lever: parseLever };
-
-// ── Fetch with timeout ──────────────────────────────────────────────
+const PARSERS = {
+  greenhouse: parseGreenhouse,
+  ashby: parseAshby,
+  lever: parseLever,
+};
 
 async function fetchJson(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
   try {
-    const res = await fetch(url, { signal: controller.signal });
+    const res = await fetch(url, { signal: controller.signal, headers: DEFAULT_HEADERS });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } finally {
@@ -120,35 +118,138 @@ async function fetchJson(url) {
   }
 }
 
-// ── Title filter ────────────────────────────────────────────────────
+async function fetchText(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal, headers: DEFAULT_HEADERS });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 function buildTitleFilter(titleFilter) {
-  const positive = (titleFilter?.positive || []).map(k => k.toLowerCase());
-  const negative = (titleFilter?.negative || []).map(k => k.toLowerCase());
+  const positive = (titleFilter?.positive || []).map(keyword => keyword.toLowerCase());
+  const negative = (titleFilter?.negative || []).map(keyword => keyword.toLowerCase());
 
-  return (title) => {
+  return title => {
     const lower = title.toLowerCase();
-    const hasPositive = positive.length === 0 || positive.some(k => lower.includes(k));
-    const hasNegative = negative.some(k => lower.includes(k));
+    const hasPositive = positive.length === 0 || positive.some(keyword => lower.includes(keyword));
+    const hasNegative = negative.some(keyword => lower.includes(keyword));
     return hasPositive && !hasNegative;
   };
 }
 
-// ── Dedup ───────────────────────────────────────────────────────────
+function decodeHtmlEntities(text) {
+  return text
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ');
+}
+
+function stripHtml(text) {
+  return decodeHtmlEntities(text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')).trim();
+}
+
+function normalizeSearchResultUrl(rawUrl) {
+  if (!rawUrl) return '';
+  const decoded = decodeHtmlEntities(rawUrl);
+
+  try {
+    const url = new URL(decoded, 'https://html.duckduckgo.com');
+    const target = url.searchParams.get('uddg');
+    return target ? decodeURIComponent(target) : url.toString();
+  } catch {
+    return decoded;
+  }
+}
+
+function inferCompanyFromUrl(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '');
+    const first = host.split('.')[0] || host;
+    return first
+      .split(/[-_]/g)
+      .filter(Boolean)
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(' ');
+  } catch {
+    return 'Unknown';
+  }
+}
+
+function extractTitleAndCompany(rawTitle, url) {
+  const title = rawTitle.replace(/\s+/g, ' ').trim();
+  const patterns = [
+    /^(.+?)\s+@\s+(.+)$/,
+    /^(.+?)\s+\|\s+(.+)$/,
+    /^(.+?)\s+[—–-]\s+(.+)$/,
+    /^(.+?)\s+at\s+(.+)$/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = title.match(pattern);
+    if (match) {
+      return {
+        title: match[1].trim(),
+        company: match[2].trim(),
+      };
+    }
+  }
+
+  return {
+    title,
+    company: inferCompanyFromUrl(url),
+  };
+}
+
+function parseDuckDuckGoResults(html, queryName) {
+  const results = [];
+  const seen = new Set();
+  const regex = /<a[^>]+class="[^"]*result__a[^"]*"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+
+  for (const match of html.matchAll(regex)) {
+    const url = normalizeSearchResultUrl(match[1]);
+    if (!url.startsWith('http') || seen.has(url)) continue;
+
+    const rawTitle = stripHtml(match[2]);
+    if (!rawTitle) continue;
+
+    const parsed = extractTitleAndCompany(rawTitle, url);
+    results.push({
+      title: parsed.title,
+      url,
+      company: parsed.company,
+      location: '',
+      source: queryName,
+    });
+    seen.add(url);
+
+    if (results.length >= SEARCH_RESULTS_PER_QUERY) break;
+  }
+
+  return results;
+}
 
 function loadSeenUrls() {
   const seen = new Set();
 
-  // scan-history.tsv
   if (existsSync(SCAN_HISTORY_PATH)) {
     const lines = readFileSync(SCAN_HISTORY_PATH, 'utf-8').split('\n');
-    for (const line of lines.slice(1)) { // skip header
+    for (const line of lines.slice(1)) {
       const url = line.split('\t')[0];
       if (url) seen.add(url);
     }
   }
 
-  // pipeline.md — extract URLs from checkbox lines
   if (existsSync(PIPELINE_PATH)) {
     const text = readFileSync(PIPELINE_PATH, 'utf-8');
     for (const match of text.matchAll(/- \[[ x]\] (https?:\/\/\S+)/g)) {
@@ -156,7 +257,6 @@ function loadSeenUrls() {
     }
   }
 
-  // applications.md — extract URLs from report links and any inline URLs
   if (existsSync(APPLICATIONS_PATH)) {
     const text = readFileSync(APPLICATIONS_PATH, 'utf-8');
     for (const match of text.matchAll(/https?:\/\/[^\s|)]+/g)) {
@@ -169,9 +269,9 @@ function loadSeenUrls() {
 
 function loadSeenCompanyRoles() {
   const seen = new Set();
+
   if (existsSync(APPLICATIONS_PATH)) {
     const text = readFileSync(APPLICATIONS_PATH, 'utf-8');
-    // Parse markdown table rows: | # | Date | Company | Role | ...
     for (const match of text.matchAll(/\|[^|]+\|[^|]+\|\s*([^|]+)\s*\|\s*([^|]+)\s*\|/g)) {
       const company = match[1].trim().toLowerCase();
       const role = match[2].trim().toLowerCase();
@@ -180,36 +280,31 @@ function loadSeenCompanyRoles() {
       }
     }
   }
+
   return seen;
 }
-
-// ── Pipeline writer ─────────────────────────────────────────────────
 
 function appendToPipeline(offers) {
   if (offers.length === 0) return;
 
-  let text = readFileSync(PIPELINE_PATH, 'utf-8');
+  if (!existsSync(PIPELINE_PATH)) {
+    writeFileSync(PIPELINE_PATH, '# Pipeline\n\n## Pendientes\n\n## Procesadas\n', 'utf-8');
+  }
 
-  // Find "## Pendientes" section and append after it
+  let text = readFileSync(PIPELINE_PATH, 'utf-8');
   const marker = '## Pendientes';
   const idx = text.indexOf(marker);
+
   if (idx === -1) {
-    // No Pendientes section — append at end before Procesadas
-    const procIdx = text.indexOf('## Procesadas');
-    const insertAt = procIdx === -1 ? text.length : procIdx;
-    const block = `\n${marker}\n\n` + offers.map(o =>
-      `- [ ] ${o.url} | ${o.company} | ${o.title}`
-    ).join('\n') + '\n\n';
+    const processedIdx = text.indexOf('## Procesadas');
+    const insertAt = processedIdx === -1 ? text.length : processedIdx;
+    const block = `\n${marker}\n\n${offers.map(offer => `- [ ] ${offer.url} | ${offer.company} | ${offer.title}`).join('\n')}\n\n`;
     text = text.slice(0, insertAt) + block + text.slice(insertAt);
   } else {
-    // Find the end of existing Pendientes content (next ## or end)
     const afterMarker = idx + marker.length;
     const nextSection = text.indexOf('\n## ', afterMarker);
     const insertAt = nextSection === -1 ? text.length : nextSection;
-
-    const block = '\n' + offers.map(o =>
-      `- [ ] ${o.url} | ${o.company} | ${o.title}`
-    ).join('\n') + '\n';
+    const block = `\n${offers.map(offer => `- [ ] ${offer.url} | ${offer.company} | ${offer.title}`).join('\n')}\n`;
     text = text.slice(0, insertAt) + block + text.slice(insertAt);
   }
 
@@ -217,19 +312,16 @@ function appendToPipeline(offers) {
 }
 
 function appendToScanHistory(offers, date) {
-  // Ensure file + header exist
   if (!existsSync(SCAN_HISTORY_PATH)) {
     writeFileSync(SCAN_HISTORY_PATH, 'url\tfirst_seen\tportal\ttitle\tcompany\tstatus\n', 'utf-8');
   }
 
-  const lines = offers.map(o =>
-    `${o.url}\t${date}\t${o.source}\t${o.title}\t${o.company}\tadded`
-  ).join('\n') + '\n';
+  const lines = offers
+    .map(offer => `${offer.url}\t${date}\t${offer.source}\t${offer.title}\t${offer.company}\tadded`)
+    .join('\n');
 
-  appendFileSync(SCAN_HISTORY_PATH, lines, 'utf-8');
+  appendFileSync(SCAN_HISTORY_PATH, `${lines}\n`, 'utf-8');
 }
-
-// ── Parallel fetch with concurrency limit ───────────────────────────
 
 async function parallelFetch(tasks, limit) {
   const results = [];
@@ -247,7 +339,17 @@ async function parallelFetch(tasks, limit) {
   return results;
 }
 
-// ── Main ────────────────────────────────────────────────────────────
+function acceptJob(job, titleFilter, seenUrls, seenCompanyRoles) {
+  if (!titleFilter(job.title)) return 'filtered';
+  if (seenUrls.has(job.url)) return 'duplicate';
+
+  const key = `${job.company.toLowerCase()}::${job.title.toLowerCase()}`;
+  if (seenCompanyRoles.has(key)) return 'duplicate';
+
+  seenUrls.add(job.url);
+  seenCompanyRoles.add(key);
+  return 'accepted';
+}
 
 async function main() {
   const args = process.argv.slice(2);
@@ -255,7 +357,6 @@ async function main() {
   const companyFlag = args.indexOf('--company');
   const filterCompany = companyFlag !== -1 ? args[companyFlag + 1]?.toLowerCase() : null;
 
-  // 1. Read portals.yml
   if (!existsSync(PORTALS_PATH)) {
     console.error('Error: portals.yml not found. Run onboarding first.');
     process.exit(1);
@@ -263,102 +364,122 @@ async function main() {
 
   const config = parseYaml(readFileSync(PORTALS_PATH, 'utf-8'));
   const companies = config.tracked_companies || [];
+  const searchQueries = (config.search_queries || []).filter(query => query.enabled !== false);
   const titleFilter = buildTitleFilter(config.title_filter);
 
-  // 2. Filter to enabled companies with detectable APIs
   const targets = companies
-    .filter(c => c.enabled !== false)
-    .filter(c => !filterCompany || c.name.toLowerCase().includes(filterCompany))
-    .map(c => ({ ...c, _api: detectApi(c) }))
-    .filter(c => c._api !== null);
+    .filter(company => company.enabled !== false)
+    .filter(company => !filterCompany || company.name.toLowerCase().includes(filterCompany))
+    .map(company => ({ ...company, _api: detectApi(company) }))
+    .filter(company => company._api !== null);
 
-  const skippedCount = companies.filter(c => c.enabled !== false).length - targets.length;
+  const skippedCount = companies.filter(company => company.enabled !== false).length - targets.length;
 
-  console.log(`Scanning ${targets.length} companies via API (${skippedCount} skipped — no API detected)`);
-  if (dryRun) console.log('(dry run — no files will be written)\n');
+  console.log(`Scanning ${targets.length} companies via API (${skippedCount} skipped - no API detected)`);
+  console.log(`Running ${searchQueries.length} search queries`);
+  if (dryRun) console.log('(dry run - no files will be written)\n');
 
-  // 3. Load dedup sets
   const seenUrls = loadSeenUrls();
   const seenCompanyRoles = loadSeenCompanyRoles();
-
-  // 4. Fetch all APIs
   const date = new Date().toISOString().slice(0, 10);
-  let totalFound = 0;
+
+  let totalApiResults = 0;
+  let totalSearchResults = 0;
   let totalFiltered = 0;
   let totalDupes = 0;
   const newOffers = [];
   const errors = [];
 
-  const tasks = targets.map(company => async () => {
+  const apiTasks = targets.map(company => async () => {
     const { type, url } = company._api;
     try {
       const json = await fetchJson(url);
       const jobs = PARSERS[type](json, company.name);
-      totalFound += jobs.length;
+      totalApiResults += jobs.length;
 
       for (const job of jobs) {
-        if (!titleFilter(job.title)) {
+        const verdict = acceptJob({ ...job, source: `${type}-api` }, titleFilter, seenUrls, seenCompanyRoles);
+        if (verdict === 'filtered') {
           totalFiltered++;
           continue;
         }
-        if (seenUrls.has(job.url)) {
+        if (verdict === 'duplicate') {
           totalDupes++;
           continue;
         }
-        const key = `${job.company.toLowerCase()}::${job.title.toLowerCase()}`;
-        if (seenCompanyRoles.has(key)) {
-          totalDupes++;
-          continue;
-        }
-        // Mark as seen to avoid intra-scan dupes
-        seenUrls.add(job.url);
-        seenCompanyRoles.add(key);
         newOffers.push({ ...job, source: `${type}-api` });
       }
     } catch (err) {
-      errors.push({ company: company.name, error: err.message });
+      errors.push({ source: company.name, error: err.message });
     }
   });
 
-  await parallelFetch(tasks, CONCURRENCY);
+  await parallelFetch(apiTasks, CONCURRENCY);
 
-  // 5. Write results
+  const searchTasks = searchQueries.map(queryConfig => async () => {
+    try {
+      const searchUrl = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(queryConfig.query)}`;
+      const html = await fetchText(searchUrl);
+      const jobs = parseDuckDuckGoResults(html, queryConfig.name);
+      totalSearchResults += jobs.length;
+
+      for (const job of jobs) {
+        const verdict = acceptJob(job, titleFilter, seenUrls, seenCompanyRoles);
+        if (verdict === 'filtered') {
+          totalFiltered++;
+          continue;
+        }
+        if (verdict === 'duplicate') {
+          totalDupes++;
+          continue;
+        }
+        newOffers.push(job);
+      }
+    } catch (err) {
+      errors.push({ source: queryConfig.name, error: err.message });
+    }
+  });
+
+  await parallelFetch(searchTasks, SEARCH_CONCURRENCY);
+
   if (!dryRun && newOffers.length > 0) {
     appendToPipeline(newOffers);
     appendToScanHistory(newOffers, date);
   }
 
-  // 6. Print summary
-  console.log(`\n${'━'.repeat(45)}`);
-  console.log(`Portal Scan — ${date}`);
-  console.log(`${'━'.repeat(45)}`);
+  console.log(`\n${'-'.repeat(45)}`);
+  console.log(`Portal Scan - ${date}`);
+  console.log(`${'-'.repeat(45)}`);
   console.log(`Companies scanned:     ${targets.length}`);
-  console.log(`Total jobs found:      ${totalFound}`);
+  console.log(`Queries executed:      ${searchQueries.length}`);
+  console.log(`Total jobs found:      ${totalApiResults + totalSearchResults}`);
+  console.log(`  API results:         ${totalApiResults}`);
+  console.log(`  Search results:      ${totalSearchResults}`);
   console.log(`Filtered by title:     ${totalFiltered} removed`);
   console.log(`Duplicates:            ${totalDupes} skipped`);
   console.log(`New offers added:      ${newOffers.length}`);
 
   if (errors.length > 0) {
     console.log(`\nErrors (${errors.length}):`);
-    for (const e of errors) {
-      console.log(`  ✗ ${e.company}: ${e.error}`);
+    for (const error of errors) {
+      console.log(`  x ${error.source}: ${error.error}`);
     }
   }
 
   if (newOffers.length > 0) {
     console.log('\nNew offers:');
-    for (const o of newOffers) {
-      console.log(`  + ${o.company} | ${o.title} | ${o.location || 'N/A'}`);
+    for (const offer of newOffers) {
+      console.log(`  + ${offer.company} | ${offer.title} | ${offer.location || 'N/A'}`);
     }
     if (dryRun) {
-      console.log('\n(dry run — run without --dry-run to save results)');
+      console.log('\n(dry run - run without --dry-run to save results)');
     } else {
       console.log(`\nResults saved to ${PIPELINE_PATH} and ${SCAN_HISTORY_PATH}`);
     }
   }
 
-  console.log(`\n→ Run /career-ops pipeline to evaluate new offers.`);
-  console.log('→ Share results and get help: https://discord.gg/8pRpHETxa4');
+  console.log('\n-> Run /career-ops pipeline to evaluate new offers.');
+  console.log('-> Share results and get help: https://discord.gg/8pRpHETxa4');
 }
 
 main().catch(err => {
