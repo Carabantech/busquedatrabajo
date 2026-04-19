@@ -68,6 +68,7 @@ Construido por alguien que lo uso para evaluar 740+ ofertas, generar 100+ CVs pe
 | **Scanner de portales** | 45+ empresas pre-configuradas (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + queries en Ashby, Greenhouse, Lever, Wellfound |
 | **Batch** | Evaluacion en paralelo con workers `claude -p` |
 | **Dashboard TUI** | Terminal UI para navegar, filtrar y ordenar tu pipeline |
+| **Dashboard Web Simple** | Genera un HTML estatico con fecha, puesto, estado, PDF y progreso del proceso |
 | **Human-in-the-Loop** | La IA evalua y recomienda, tu decides y actuas. El sistema nunca envia una aplicacion -- tu siempre tienes la ultima palabra |
 | **Integridad de pipeline** | Merge automatico, dedup, normalizacion de estados, health checks |
 
@@ -173,6 +174,17 @@ go build -o career-dashboard .
 ```
 
 Features: 6 pestañas de filtro, 4 modos de ordenacion, vista agrupada/plana, previews lazy-loaded, cambios de estado inline.
+
+## Dashboard Web Simple
+
+Si prefieres una vista rapida en navegador sin compilar Go, puedes generar un HTML estatico desde `data/applications.md`:
+
+```bash
+npm run dashboard:web
+npm run dashboard:web:open
+```
+
+Esto crea `output/dashboard.html` con filtros por busqueda, estado, proceso y PDF. La variante `:open` lo abre directamente en tu navegador por defecto.
 
 ## Estructura del proyecto
 

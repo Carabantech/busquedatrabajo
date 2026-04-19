@@ -200,7 +200,19 @@ Cuando ejecutas `/career-ops pipeline` o `/career-ops-pipeline`, el sistema proc
 
 ### 5️⃣ Dashboard (opcional)
 
-En `dashboard/` hay un Go dashboard que visualiza todo en interfaz web, pero **NO es obligatorio.** La mayoría usa solo markdown.
+Tienes dos opciones:
+
+- En `dashboard/` hay un dashboard TUI hecho en Go para usar desde terminal.
+- Tambien hay un tablero web simple generado como HTML estatico desde `data/applications.md`.
+
+Comandos:
+
+```bash
+npm run dashboard:web
+npm run dashboard:web:open
+```
+
+Eso genera `output/dashboard.html` con filtros por busqueda, estado, proceso y PDF. La variante `:open` lo abre directo en el navegador.
 
 ---
 
@@ -296,6 +308,8 @@ npm run merge              # Fusiona adiciones al tracker
 npm run pdf                # Genera PDFs
 npm run scan               # Escanea portales de empleo
 npm run liveness           # Verifica si URLs siguen activas
+npm run dashboard:web      # Genera tablero HTML simple
+npm run dashboard:web:open # Genera el tablero y lo abre en el navegador
 ```
 
 ---

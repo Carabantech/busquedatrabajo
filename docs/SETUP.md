@@ -78,3 +78,15 @@ cd dashboard
 go build -o career-dashboard .
 ./career-dashboard --path ..  # Opens TUI pipeline viewer
 ```
+
+## Generate Simple Web Dashboard (Optional)
+
+```bash
+npm run dashboard:web
+npm run dashboard:web:open
+```
+
+This generates `output/dashboard.html`, a simple browser-friendly board based on
+`data/applications.md` that shows date, company, role, current status, PDF
+presence, and whether the process is still active or already closed. The
+`:open` variant also opens the generated file in your default browser.
