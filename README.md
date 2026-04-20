@@ -31,7 +31,7 @@ Un sistema de automatización de búsqueda de empleo construido en **Claude Code
 
 ```bash
 # 1. Clona el repositorio
-git clone https://github.com/Carabantech/career-ops.git
+git clone https://github.com/Carabantech/busquedatrabajo.git
 cd career-ops
 
 # 2. Instala dependencias
@@ -181,7 +181,7 @@ npm run rollback       # Revierte a versión anterior
 ## 🤝 Comunidad
 
 - **Discord:** [discord.gg/8pRpHETxa4](https://discord.gg/8pRpHETxa4)
-- **Issues:** [Abre una discusión](https://github.com/Carabantech/career-ops/issues)
+- **Issues:** [Abre una discusión](https://github.com/Carabantech/busquedatrabajo/issues)
 - **Governance:** Ver [GOVERNANCE.md](GOVERNANCE.md)
 
 ## 📜 Licencia

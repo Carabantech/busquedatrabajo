@@ -76,7 +76,7 @@ Construido por alguien que lo uso para evaluar 740+ ofertas, generar 100+ CVs pe
 
 ```bash
 # 1. Clonar e instalar
-git clone https://github.com/santifer/career-ops.git
+git clone https://github.com/Carabantech/busquedatrabajo.git
 cd career-ops && npm install
 npx playwright install chromium   # Necesario para generar PDFs
 
@@ -110,7 +110,7 @@ claude   # Abrir Claude Code en este directorio
 Si quieres compartir el proyecto o arrancar desde cero sin arrastrar datos personales, usa la rama `clean`.
 
 ```bash
-git clone https://github.com/Carabantech/career-ops.git
+git clone https://github.com/Carabantech/busquedatrabajo.git
 cd career-ops
 git checkout clean
 npm install
