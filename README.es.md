@@ -105,6 +105,28 @@ claude   # Abrir Claude Code en este directorio
 
 > **El sistema esta diseñado para que Claude lo personalice.** Modes, arquetipos, scoring, scripts de negociacion -- solo pidelo. Claude lee los mismos archivos que usa, asi que sabe exactamente que editar.
 
+## Rama Clean Para Compartir
+
+Si quieres compartir el proyecto o arrancar desde cero sin arrastrar datos personales, usa la rama `clean`.
+
+```bash
+git clone https://github.com/Carabantech/career-ops.git
+cd career-ops
+git checkout clean
+npm install
+npx playwright install chromium
+```
+
+La rama `clean` deja el proyecto como plantilla:
+- `config/profile.yml` generico
+- `cv.md` de ejemplo
+- `modes/_profile.md` generico
+- `data/applications.md` vacio
+- `data/pipeline.md` vacio
+- sin reportes ni salidas personales
+
+Cada persona solo tiene que reemplazar su perfil, su CV y sus portales objetivo.
+
 Guia completa en [docs/SETUP.md](docs/SETUP.md).
 
 ## Uso
