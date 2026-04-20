@@ -129,6 +129,40 @@ Cada persona solo tiene que reemplazar su perfil, su CV y sus portales objetivo.
 
 Guia completa en [docs/SETUP.md](docs/SETUP.md).
 
+## Colaboracion Segura
+
+Si quieres que otras personas puedan descargar el repo sin modificar el repositorio principal, el flujo recomendado es:
+
+1. Dar acceso `Read` si el repositorio es privado.
+2. Proteger la rama `main` en GitHub y exigir `Pull Request` para cualquier cambio.
+3. Pedir que cada colaborador trabaje desde su propio `fork`.
+
+Flujo sugerido:
+
+```bash
+# 1. Hacer fork en GitHub
+
+# 2. Clonar el fork personal
+git clone https://github.com/TU-USUARIO/busquedatrabajo.git
+cd career-ops
+
+# 3. Añadir el repo principal como upstream
+git remote add upstream https://github.com/Carabantech/busquedatrabajo.git
+
+# 4. Crear una rama de trabajo
+git checkout -b mi-cambio
+
+# 5. Subir cambios al fork
+git push origin mi-cambio
+```
+
+Luego, el colaborador abre un Pull Request desde su fork hacia `Carabantech/busquedatrabajo`.
+
+Con esto:
+- cualquiera puede clonar o descargar;
+- nadie escribe directamente sobre `main`;
+- todos los cambios pasan por revisión antes de mergearse.
+
 ## Uso
 
 Career-ops es un unico slash command con multiples modos:
