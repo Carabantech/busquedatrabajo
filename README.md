@@ -8,7 +8,7 @@
 
 ## 🎯 Qué es career-ops
 
-Un sistema de automatización de búsqueda de empleo construido en **Claude Code**, basado en la experiencia real de [Santiago Fernández](https://santifer.io) que evaluó **740+ ofertas**, generó **100+ CVs personalizados** y consiguió un rol de **Head of Applied AI**.
+Un sistema de automatización de búsqueda de empleo construido en **Claude Code**
 
 **No es un scraper genérico.** Este es un pipeline completo de búsqueda de empleo con:
 - ✅ Evaluación inteligente de ofertas (A-F scoring)
