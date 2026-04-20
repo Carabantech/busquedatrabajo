@@ -2,210 +2,56 @@
 
 title_filter:
   positive:
-    - "IT Manager"
-    - "IT Operations Manager"
-    - "Head of IT"
-    - "Director of IT"
-    - "Infrastructure Manager"
-    - "Operations Manager"
-    - "Service Delivery"
-    - "Technology Manager"
-    - "Technical Operations Manager"
-    - "Infrastructure Lead"
-    - "Cloud Infrastructure Manager"
-    - "IT Lead"
-    - "Jefe de IT"
-    - "Jefe de Sistemas"
-    - "Jefe de Infraestructura"
-    - "Lider de Infraestructura"
-    - "Responsable de IT"
-    - "Responsable de Sistemas"
-    - "Coordinador IT"
-    - "Coordinador de Infraestructura"
-    - "Gerente de IT"
-    - "Gerente de Tecnologia"
-    - "Gerente de Sistemas"
-    - "Gerente de Infraestructura"
-    - "Lider de Operaciones IT"
-    - "Jefe de Operaciones IT"
-    - "Administrador de Infraestructura"
-    - "IT Operations"
+    - "AI"
+    - "ML"
+    - "LLM"
+    - "Agent"
+    - "Product Manager"
+    - "Solutions Architect"
+    - "Automation"
   negative:
     - "Junior"
     - "Intern"
-    - "Sales"
-    - "Account Executive"
-    - "Recruiter"
-    - "Designer"
-    - "Frontend"
-    - "Backend"
-    - "Full Stack"
-    - "Data Scientist"
-    - "ML Engineer"
-    - "AI Engineer"
-    - "Product Manager"
-    - "Project Manager"
-    - "Program Manager"
-    - "Technical Program Manager"
-    - "Marketing"
-    - "QA"
-    - "Quality Assurance"
-    - "Support Engineer"
-    - "Help Desk"
-    - "Analyst"
-    - "Analista"
-    - "Developer"
-    - "Desarrollador"
-    - "Salesforce Admin"
-    - "SAP "
-    - "Oracle EBS"
-    - "Mainframe"
-    - "COBOL"
+    - ".NET"
+    - "Java "
+    - "PHP"
+    - "Ruby"
+    - "Embedded"
+    - "Blockchain"
+    - "Crypto"
   seniority_boost:
     - "Senior"
+    - "Staff"
+    - "Principal"
     - "Lead"
     - "Head"
     - "Director"
 
 search_queries:
-  - name: LinkedIn - IT Mendoza
-    query: 'site:linkedin.com/jobs/view "Mendoza" ("IT Manager" OR "Head of IT" OR "Infrastructure Manager" OR "Jefe de Infraestructura" OR "Jefe de Sistemas" OR "Coordinador IT")'
+  - name: Ashby - AI PM
+    query: 'site:jobs.ashbyhq.com "AI Product Manager" OR "Senior Product Manager AI" remote'
     enabled: true
 
-  - name: LinkedIn - Argentina Remote IT
-    query: 'site:linkedin.com/jobs/view ("Argentina" OR remoto) ("IT Manager" OR "Infrastructure Manager" OR "Head of IT" OR "Gerente de IT" OR "Service Delivery Manager")'
+  - name: Greenhouse - AI Engineer
+    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "AI Engineer" OR "LLM" OR "Agentic" remote'
     enabled: true
 
-  - name: Indeed - Mendoza IT
-    query: 'site:ar.indeed.com/q-it-l-mendoza%2C-mendoza-empleos ("IT Manager" OR "Jefe de Infraestructura" OR "Jefe de Sistemas" OR "Gerente de IT" OR "Coordinador IT")'
-    enabled: true
-
-  - name: Glassdoor - Mendoza Infra
-    query: 'site:glassdoor.com/Job/mendoza ("IT Manager" OR "Infrastructure Manager" OR "Jefe de Infraestructura" OR "Head of IT")'
-    enabled: true
-
-  - name: Bumeran - IT Argentina
-    query: 'site:bumeran.com.ar ("IT Manager" OR "Jefe de Infraestructura" OR "Jefe de Sistemas" OR "Gerente de IT" OR "Responsable de IT")'
-    enabled: true
-
-  - name: Computrabajo - IT Mendoza
-    query: 'site:computrabajo.com.ar "Mendoza" ("IT Manager" OR "Jefe de Infraestructura" OR "Jefe de Sistemas" OR "Coordinador IT" OR "Operaciones IT")'
-    enabled: true
-
-  - name: Argentina Remote - Infra and Ops
-    query: '("Argentina" OR remoto) ("Infrastructure Manager" OR "IT Operations Manager" OR "Head of IT" OR "Jefe de Infraestructura" OR "Gerente de IT")'
-    enabled: true
-
-  - name: LinkedIn - Jefe de Infraestructura Argentina
-    query: 'site:linkedin.com/jobs/view Argentina ("Jefe de Infraestructura" OR "Jefe de Sistemas" OR "Responsable de IT" OR "Gerente de Tecnologia")'
-    enabled: true
-
-  - name: Indeed - Infraestructura Argentina
-    query: 'site:ar.indeed.com ("Jefe de Infraestructura" OR "Gerente de Sistemas" OR "Responsable de IT" OR "Coordinador de Infraestructura") Argentina'
-    enabled: true
-
-  - name: Ashby - IT Leadership
-    query: 'site:jobs.ashbyhq.com "IT Manager" OR "Head of IT" OR "IT Operations Manager" remote'
-    enabled: true
-
-  - name: Greenhouse - Infra and Ops
-    query: 'site:boards.greenhouse.io OR site:job-boards.greenhouse.io "Infrastructure Manager" OR "IT Operations" OR "Director of IT" remote'
-    enabled: true
-
-  - name: Lever - IT Operations
-    query: 'site:jobs.lever.co "IT Manager" OR "Infrastructure" OR "Cloud Operations" remote'
-    enabled: true
-
-  - name: Workable - IT Manager
-    query: 'site:apply.workable.com "IT Manager" OR "IT Operations Manager" OR "Head of IT"'
+  - name: Workable - AI Roles
+    query: 'site:apply.workable.com "AI" "Product Manager" OR "Solutions Architect" OR "AI Engineer" remote'
     enabled: true
 
 tracked_companies:
-  - name: Globant Mendoza
-    careers_url: https://career.globant.com/
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
     scan_method: websearch
-    scan_query: 'site:career.globant.com Mendoza "IT" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: AgileEngine
-    careers_url: https://jobs.lever.co/agileengine
-    enabled: true
-
-  - name: Accenture Argentina
-    careers_url: https://www.accenture.com/ar-es/careers/jobsearch
-    scan_method: websearch
-    scan_query: 'site:accenture.com/ar-es/careers "Argentina" "IT" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: Mercado Libre
-    careers_url: https://careers.mercadolibre.com/
-    scan_method: websearch
-    scan_query: 'site:careers.mercadolibre.com "IT" OR "Infraestructura" OR "Cloud" OR "Operaciones"'
-    enabled: true
-
-  - name: TIVIT
-    careers_url: https://www.tivit.com/carreras/
-    scan_method: websearch
-    scan_query: 'site:tivit.com carreras Argentina infraestructura operaciones cloud'
-    enabled: true
-
-  - name: Softtek
-    careers_url: https://careers.softtek.com/
-    scan_method: websearch
-    scan_query: 'site:careers.softtek.com Argentina "IT Manager" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: Wenance
-    careers_url: https://jobs.lever.co/wenance
+    scan_query: 'site:openai.com/careers "Solutions" OR "Forward Deployed" OR "AI Engineer"'
     enabled: true
 
   - name: Zapier
     careers_url: https://jobs.ashbyhq.com/zapier
-    enabled: true
-
-  - name: Automattic
-    careers_url: https://automattic.com/work-with-us/
-    scan_method: websearch
-    scan_query: 'site:automattic.com/work-with-us "IT" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: Twilio
-    careers_url: https://www.twilio.com/en-us/company/jobs
-    scan_method: websearch
-    scan_query: 'site:twilio.com/company/jobs "IT" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: GitLab
-    careers_url: https://job-boards.greenhouse.io/gitlab
-    api: https://boards-api.greenhouse.io/v1/boards/gitlab/jobs
-    enabled: true
-
-  - name: Canonical
-    careers_url: https://canonical.com/careers/all
-    scan_method: websearch
-    scan_query: 'site:canonical.com/careers "IT Manager" OR "Infrastructure" OR "Cloud" OR "Operations"'
-    enabled: true
-
-  - name: Datadog
-    careers_url: https://careers.datadoghq.com/
-    scan_method: websearch
-    scan_query: 'site:careers.datadoghq.com "IT" OR "Infrastructure" OR "Cloud Operations"'
-    enabled: true
-
-  - name: Cloudflare
-    careers_url: https://www.cloudflare.com/careers/jobs/
-    scan_method: websearch
-    scan_query: 'site:cloudflare.com/careers/jobs "IT" OR "Infrastructure" OR "Operations"'
-    enabled: true
-
-  - name: Accenture
-    careers_url: https://www.accenture.com/us-en/careers/jobsearch
-    scan_method: websearch
-    scan_query: 'site:accenture.com "IT Operations Manager" OR "Infrastructure Manager" OR "Cloud"'
-    enabled: true
-
-  - name: Salesforce
-    careers_url: https://careers.salesforce.com
-    scan_method: websearch
-    scan_query: 'site:careers.salesforce.com "IT" OR "Infrastructure" OR "Operations"'
     enabled: true

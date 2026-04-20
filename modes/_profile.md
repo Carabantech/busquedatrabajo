@@ -12,13 +12,6 @@
 
 ## Your Target Roles
 
-<!-- Replace these with YOUR target roles. Examples:
-     - Senior Backend Engineer / Staff Platform Engineer
-     - AI Product Manager / Technical PM
-     - Data Engineer / ML Engineer
-     - DevOps / SRE / Platform
-     Whatever you're optimizing for. -->
-
 | Archetype | Thematic axes | What they buy |
 |-----------|---------------|---------------|
 | **AI Platform / LLMOps Engineer** | Evaluation, observability, reliability, pipelines | Someone who puts AI in production with metrics |
@@ -29,10 +22,6 @@
 | **AI Transformation Lead** | Change management, adoption, org enablement | Someone who leads AI transformation in an org |
 
 ## Your Adaptive Framing
-
-<!-- Map YOUR projects to each archetype. Example:
-     | Platform / LLMOps | My monitoring dashboard project | article-digest.md |
-     | Agentic | My chatbot with HITL escalation | cv.md section 3 | -->
 
 | If the role is... | Emphasize about you... | Proof point sources |
 |-------------------|------------------------|---------------------|
@@ -45,8 +34,6 @@
 
 ## Your Exit Narrative
 
-<!-- Replace with YOUR story. This frames everything. -->
-
 Use the candidate's exit story from `config/profile.yml` to frame ALL content:
 - **In PDF Summaries:** Bridge from past to future
 - **In STAR stories:** Reference proof points from article-digest.md
@@ -54,22 +41,13 @@ Use the candidate's exit story from `config/profile.yml` to frame ALL content:
 
 ## Your Cross-cutting Advantage
 
-<!-- What's your "signature move"? What do you do that others can't? -->
-
 Frame profile as **"Technical builder with real-world proof"** that adapts framing to the role.
 
 ## Your Portfolio / Demo
 
-<!-- If you have a live demo, dashboard, or public project:
-     url: https://yoursite.dev/demo
-     password: demo-2026
-     when_to_share: "LLMOps, AI Platform roles" -->
-
 If you have a live demo/dashboard (check profile.yml), offer access in applications for relevant roles.
 
 ## Your Comp Targets
-
-<!-- Research comp ranges for YOUR target roles -->
 
 **General guidance:**
 - Use WebSearch for current market data (Glassdoor, Levels.fyi, Blind)
@@ -77,8 +55,6 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 - Contractor rates are typically 30-50% higher than employee base
 
 ## Your Negotiation Scripts
-
-<!-- Adapt to YOUR situation, currency, location -->
 
 **Salary expectations:**
 > "Based on market data for this role, I'm targeting [RANGE from profile.yml]. I'm flexible on structure -- what matters is the total package and the opportunity."
@@ -91,8 +67,6 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 
 ## Your Location Policy
 
-<!-- Adapt to YOUR situation -->
-
 **In forms:**
 - Follow your actual availability from profile.yml
 - Specify timezone overlap in free-text fields
@@ -100,8 +74,3 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 **In evaluations (scoring):**
 - Remote dimension for hybrid outside your country: score **3.0** (not 1.0)
 - Only score 1.0 if JD says "must be on-site 4-5 days/week, no exceptions"
-
-## Current Employer Exclusion
-
-- Do not suggest or prioritize Wakapi for new applications.
-- Treat Wakapi as the current employer context, not as a job target.
