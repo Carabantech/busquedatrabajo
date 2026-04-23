@@ -1,88 +1,90 @@
-# Career Ops
+# 🚀 Career Ops - Sistema de Búsqueda Laboral con IA
 
-Herramienta local para organizar una busqueda laboral asistida por IA.
+**Una herramienta completa y privada para gestionar tu búsqueda de empleo de forma inteligente.**
 
-Este proyecto sirve para:
-- guardar el perfil de un candidato
-- cargar su CV y datos complementarios
-- buscar ofertas que encajen mejor con ese perfil
-- generar materiales de postulacion (`.md`, `.html`, `.pdf`)
-- enviar o exportar esos materiales
-- llevar un seguimiento ordenado de la busqueda
+Automatiza la búsqueda, evaluación y seguimiento de oportunidades laborales. Todo se ejecuta **localmente en tu computadora** — tu perfil, CV y datos nunca se envían a servidores externos.
 
-No es un servicio web alojado. Todo se usa **en tu computadora**, dentro del repo.
+## ✨ Qué puedes hacer
 
----
+- **📋 Gestionar perfil**: Guardar y actualizar datos del candidato
+- **📄 Gestionar CV**: Subir CV y datos complementarios
+- **🔍 Buscar ofertas**: Analizar portales de empleo automáticamente
+- **⭐ Evaluar ofertas**: Scoring inteligente basado en tu perfil
+- **📝 Generar materiales**: CVs adaptados en `.md`, `.html`, `.pdf`
+- **💌 Enviar paquetes**: Aplicaciones directas por correo
+- **📊 Seguimiento**: Tracker ordenado de todas las aplicaciones
 
-## Que incluye este proyecto
+## 📦 Componentes principales
 
-El repo combina dos cosas:
+El proyecto integra dos capas:
 
-1. Un sistema base de `career-ops` con scripts, modos y utilidades para evaluar ofertas y generar CVs.
-2. Una web local hecha en `Next.js` para trabajar de forma mas visual, con pasos guiados.
+**1. Sistema Core (`career-ops`)**
+- Scripts de evaluación y análisis
+- Modos de trabajo especializados
+- Generación de PDFs y materiales
+- Manejo de datos en Markdown/YAML
 
-La web local permite:
-- subir el CV
-- guardar el LinkedIn del candidato
-- analizar que datos faltan
-- buscar ofertas
-- generar archivos de postulacion
-- enviarlos por mail o copiarlos a una carpeta local
-
----
-
-## Requisitos
-
-Antes de usar el proyecto, instala esto en tu maquina:
-
-### Obligatorio
-
-- `Git`
-- `Node.js 18+`
-- `npm`
-
-### Recomendado
-
-- `Playwright Chromium`
-  Se usa para generar PDFs de los CVs.
-- `Microsoft Outlook` en Windows
-  Se usa si queres enviar los paquetes por mail desde la app.
-
-### Opcional
-
-- `Go 1.21+`
-  Solo si queres usar el dashboard TUI de la carpeta `dashboard/`.
+**2. Interfaz Web (Next.js)**
+- Flujo guiado paso a paso
+- Gestión visual de candidatos
+- Búsqueda y generación interactiva
+- Integración con Outlook para envíos
 
 ---
 
-## Instalacion local
+## ⚙️ Requisitos previos
 
-### 1. Clonar el repositorio
+### 🔴 Obligatorio
+
+| Herramienta | Versión | Propósito |
+|-------------|---------|----------|
+| **Git** | Última | Control de versiones |
+| **Node.js** | 18+ | Runtime de JavaScript |
+| **npm** | 8+ | Gestor de paquetes |
+
+### 🟡 Recomendado
+
+| Herramienta | Propósito |
+|-------------|----------|
+| **Playwright** | Generar PDFs automáticamente |
+| **Microsoft Outlook** | Enviar paquetes de aplicación por correo |
+
+### 🟢 Opcional
+
+| Herramienta | Versión | Propósito |
+|-------------|---------|----------|
+| **Go** | 1.21+ | Dashboard TUI avanzado |
+
+---
+
+## 🔧 Instalación rápida
+
+### Paso 1: Clonar el repositorio
 
 ```bash
 git clone https://github.com/Carabantech/busquedatrabajo.git
 cd busquedatrabajo
 ```
 
-### 2. Instalar dependencias
+### Paso 2: Instalar dependencias Node.js
 
 ```bash
 npm install
 ```
 
-### 3. Instalar Playwright Chromium
+### Paso 3: Instalar Playwright Chromium (para PDF)
 
 ```bash
 npx playwright install chromium
 ```
 
-### 4. Verificar que todo este bien
+### Paso 4: Verificar integridad del sistema
 
 ```bash
 npm run doctor
 ```
 
-Si queres chequear la integridad del pipeline:
+Para validar el pipeline de datos:
 
 ```bash
 npm run verify
@@ -90,214 +92,330 @@ npm run verify
 
 ---
 
-## Como usar el proyecto
+## 🎯 Cómo usar el proyecto
 
-Tenes dos formas principales de uso.
+Tienes **dos formas** de trabajar con career-ops:
 
-### Opcion A: usar la web local
+### Opción A: Interfaz Web (Recomendado para principiantes)
 
-Es la forma mas facil para la mayoria de las personas.
+La forma más visual e intuitiva.
 
-#### Levantar la web
+#### Iniciar la aplicación
 
 ```bash
 npm run dev
 ```
 
-Despues abri:
+Luego abre en tu navegador:
 
-```text
+```
 http://localhost:3000
 ```
 
-#### Flujo dentro de la web
+#### Flujo de trabajo paso a paso
 
-1. Crear o seleccionar un candidato
-2. Subir el CV
-3. Agregar el link de LinkedIn
-4. Completar los datos faltantes del perfil
-5. Pulsar `Analizar`
-6. Confirmar el perfil
-7. Pulsar `Buscar`
-8. Elegir los avisos que queres usar
-9. Pulsar `Generar`
-10. Elegir una de estas salidas:
-    - `Enviar paquete`
-    - `Guardar en carpeta local`
+1. **Crear/Seleccionar candidato**: Elige o registra un nuevo perfil
+2. **Subir CV**: Carga tu CV en formato `.pdf` o `.docx`
+3. **Agregar LinkedIn**: Ingresa tu URL de perfil de LinkedIn
+4. **Completar datos**: Rellena información adicional del perfil
+5. **Analizar**: El sistema valida que no falten datos críticos
+6. **Confirmar perfil**: Revisa y confirma tus datos
+7. **Buscar ofertas**: Escanea portales según tus criterios
+8. **Seleccionar**: Elige qué ofertas te interesan
+9. **Generar materiales**: Crea CVs personalizados, textos de presentación
+10. **Enviar o guardar**: 
+    - Envía por correo (vía Outlook)
+    - O guarda localmente en `output/`
 
-#### Que hace cada paso
+#### ¿Qué hace cada paso?
 
-- `Analizar`
-  Revisa si faltan datos importantes del candidato.
+| Paso | Función |
+|------|---------|
+| **Analizar** | Valida completitud del perfil (datos faltantes, CV incompleto) |
+| **Buscar** | Escanea: LinkedIn, Computrabajo, Bumeran, Indeed, HiringRoom |
+| **Generar** | Crea: CV `.md`, CV `.html`, CV `.pdf`, Texto de postulación |
+| **Enviar** | Manda paquete completo por Outlook (requiere instalado) |
+| **Guardar** | Exporta a carpeta local: `output/<candidato>/<batch-id>/` |
 
-- `Buscar`
-  Intenta encontrar ofertas compatibles usando buscadores y portales como:
-  - LinkedIn
-  - Computrabajo
-  - Bumeran
-  - Indeed
-  - HiringRoom
+---
 
-- `Generar`
-  Crea una tanda de archivos para los avisos seleccionados:
-  - texto de postulacion `.md`
-  - CV adaptado en `.html`
-  - CV final en `.pdf`
+### Opción B: Scripts CLI (Para usuarios avanzados)
 
-- `Enviar paquete`
-  Manda los archivos por mail usando Outlook local.
+Trabaja directamente con comandos si prefieres mayor control.
 
-- `Guardar en carpeta local`
-  Copia la misma tanda a una carpeta en:
+#### Comandos principales
 
-```text
-C:\output\<candidato>\<batch-id>\
+```bash
+# Análisis y validación
+npm run doctor              # Diagnóstico completo del sistema
+npm run verify              # Chequear integridad del pipeline
+npm run normalize           # Normalizar estados en tracker
+npm run dedup               # Eliminar duplicados
+
+# Búsqueda y evaluación
+npm run scan                # Escanear portales por nuevas ofertas
+npm run liveness            # Verificar si ofertas siguen activas
+
+# Generación de materiales
+npm run pdf                 # Generar PDF desde CV fuente
+npm run merge               # Fusionar múltiples archivos de seguimiento
+
+# Notificaciones
+npm run email-packet        # Enviar paquetes por correo
 ```
 
 ---
 
-### Opcion B: usar scripts y flujo CLI
+## 📁 Archivos importantes
 
-Si preferis trabajar con scripts directamente, tambien se puede.
+### 👤 Perfil y CV (Personalización)
 
-Comandos utiles:
+| Archivo | Descripción |
+|---------|-------------|
+| **`cv.md`** | CV fuente en Markdown (única fuente de verdad) |
+| **`config/profile.yml`** | Datos del candidato: nombre, email, ubicación, objetivos |
+| **`modes/_profile.md`** | Personalizaciones: arquetipos de rol, narrativa, prioridades |
+| **`portals.yml`** | Configuración: portales a escanear, palabras clave de búsqueda |
 
-```bash
-npm run doctor
-npm run verify
-npm run scan
-npm run pdf
-npm run liveness
-npm run normalize
-npm run dedup
-npm run merge
-npm run email-packet
-```
+### 📊 Datos del Pipeline
 
----
+| Archivo | Descripción |
+|---------|-------------|
+| **`data/applications.md`** | Tracker de postulaciones (fecha, empresa, rol, score, estado) |
+| **`data/pipeline.md`** | Ofertas pendientes por procesar (inbox de URLs) |
+| **`interview-prep/story-bank.md`** | Banco de historias y casos STAR acumulados |
 
-## Archivos importantes
+### 🎨 Resultados Generados
 
-### Perfil y CV
+| Carpeta | Contenido |
+|---------|----------|
+| **`output/`** | CVs en PDF, HTML, textos de postulación (generados localmente) |
+| **`output/web-batches/`** | Tandas de aplicación creadas desde la web |
+| **`reports/`** | Reportes de evaluación de ofertas (análisis detallado A-F) |
 
-- `cv.md`
-  CV fuente del candidato
+### 💻 Aplicación Web
 
-- `config/profile.yml`
-  Perfil principal del candidato
+| Archivo | Función |
+|---------|---------|
+| **`app/`** | Rutas y endpoints de Next.js |
+| **`components/career-workflow.js`** | Interfaz principal de la aplicación |
+| **`lib/career-web.js`** | Lógica de candidatos, búsqueda, generación, envío |
 
-- `modes/_profile.md`
-  Personalizacion adicional del sistema
+### 🛠️ Herramientas del Sistema
 
-- `portals.yml`
-  Configuracion de busqueda de portales
-
-### Datos del pipeline
-
-- `data/applications.md`
-  Tracker de aplicaciones
-
-- `data/pipeline.md`
-  URLs pendientes o pipeline de ofertas
-
-### Resultados generados
-
-- `output/`
-  PDFs, HTMLs y archivos de postulacion
-
-- `output/web-batches/`
-  Tandas generadas desde la web local
-
-### Web local
-
-- `app/`
-  Rutas y endpoints de Next.js
-
-- `components/career-workflow.js`
-  Pantalla principal de la app
-
-- `lib/career-web.js`
-  Logica de candidatos, busqueda, generacion y envio
+| Script | Propósito |
+|--------|----------|
+| **`generate-pdf.mjs`** | Convierte HTML → PDF (Playwright) |
+| **`scan.mjs`** | Busca ofertas en portales automáticamente |
+| **`email-packet.mjs`** | Envía paquetes de aplicación por correo |
+| **`check-liveness.mjs`** | Verifica si ofertas siguen activas |
+| **`analyze-patterns.mjs`** | Analiza patrones en rechazos y mejora targeting |
+| **`followup-cadence.mjs`** | Calcula y gestiona seguimientos (follow-ups) |
 
 ---
 
-## Scripts principales
+## 📂 Estructura del repositorio
 
-### Web local
-
-```bash
-npm run dev
-npm run build
-npm run start
 ```
-
-### Utilidades del proyecto
-
-```bash
-npm run doctor
-npm run verify
-npm run scan
-npm run pdf
-npm run email-packet
-```
-
-### Limpiar cache de Next.js
-
-```bash
-npm run clean
-```
-
----
-
-## Estructura resumida del repo
-
-```text
 busquedatrabajo/
-|-- app/                    # Web local en Next.js
-|-- components/             # Componentes de interfaz
-|-- lib/                    # Logica compartida
-|-- config/                 # Perfil del candidato
-|-- data/                   # Estado local y tracker
-|-- modes/                  # Modos e instrucciones del sistema
-|-- output/                 # Archivos generados
-|-- templates/              # Templates HTML y configuraciones
-|-- cv.md                   # CV fuente
-|-- portals.yml             # Config de portales
-|-- generate-pdf.mjs        # HTML -> PDF
-|-- scan.mjs                # Busqueda / escaneo
-`-- email-packet.mjs        # Envio de paquetes por mail
+├── app/                        # API y rutas Next.js
+│   ├── api/                    # Endpoints: búsqueda, generación, envío
+│   ├── layout.js               # Layout principal
+│   ├── page.js                 # Home page
+│   └── globals.css             # Estilos globales
+│
+├── components/
+│   └── career-workflow.js      # Interfaz principal de la aplicación
+│
+├── lib/
+│   └── career-web.js           # Lógica central: candidatos, búsqueda, generación
+│
+├── config/
+│   ├── profile.example.yml     # Plantilla de perfil
+│   └── profile.yml             # ⭐ TU PERFIL (personalizado)
+│
+├── data/
+│   ├── applications.md         # ⭐ TRACKER DE POSTULACIONES
+│   ├── pipeline.md             # ⭐ INBOX DE OFERTAS
+│   └── candidates/             # Datos de candidatos
+│
+├── cv.md                       # ⭐ CV FUENTE (en Markdown)
+├── portals.yml                 # ⭐ CONFIGURACIÓN DE BÚSQUEDA
+│
+├── modes/                      # Instrucciones y modos del sistema
+│   ├── _shared.md              # Lógica común (no editar)
+│   ├── _profile.md             # ⭐ TUS PERSONALIZACIONES
+│   ├── oferta.md               # Evaluación de ofertas
+│   ├── apply.md                # Asistente de aplicaciones
+│   └── [otros modos...]
+│
+├── templates/
+│   ├── cv-template.html        # Plantilla HTML para CVs
+│   ├── portals.example.yml     # Plantilla de portales
+│   └── states.yml              # Estados canónicos del tracker
+│
+├── output/                     # 📁 Archivos generados (gitignored)
+│   └── web-batches/            # Tandas de la web
+│
+├── reports/                    # 📁 Reportes de evaluación
+│   └── *.md                    # Análisis detallado A-F de ofertas
+│
+├── interview-prep/             # Preparación de entrevistas
+│   ├── story-bank.md           # Historias STAR acumuladas
+│   └── {company}-{role}.md     # Intel por empresa
+│
+├── batch/                      # Procesamiento en lote
+│   ├── batch-prompt.md         # Prompt para procesamiento paralelo
+│   └── tracker-additions/      # TSV de cambios a mergear
+│
+├── docs/                       # 📖 Documentación
+│   ├── SETUP.md                # Instalación detallada
+│   ├── ARCHITECTURE.md         # Arquitectura del sistema
+│   ├── SCRIPTS.md              # Referencia de scripts
+│   └── CUSTOMIZATION.md        # Cómo personalizar
+│
+├── dashboard/                  # Dashboard TUI (Go)
+│   └── main.go                 # Dashboard alternativo
+│
+├── generate-pdf.mjs            # Generador HTML → PDF
+├── scan.mjs                    # Escaneo de portales
+├── email-packet.mjs            # Envío de paquetes
+├── analyze-patterns.mjs        # Análisis de patrones
+├── followup-cadence.mjs        # Gestor de follow-ups
+├── check-liveness.mjs          # Verificador de ofertas activas
+│
+├── package.json                # Dependencias Node.js
+├── VERSION                     # Versión actual del sistema
+├── CHANGELOG.md                # Historia de cambios
+└── README.md                   # 👈 Este archivo
 ```
+
+**⭐ Archivos que debes personalizar:**
+- `cv.md`, `config/profile.yml`, `modes/_profile.md`, `portals.yml`
+- `data/applications.md`, `data/pipeline.md`
 
 ---
 
-## Que instalar si queres usar todo
+## 🚦 Guía rápida de comandos
 
-Resumen rapido de lo necesario despues de bajar el repo:
+### Desarrollo
 
 ```bash
-npm install
-npx playwright install chromium
+npm run dev              # Iniciar web local en http://localhost:3000
+npm run build            # Compilar Next.js para producción
+npm run start            # Ejecutar versión compilada
+npm run clean            # Limpiar cache de Next.js
 ```
 
-Y si queres envio por mail desde la app:
-- Outlook instalado en Windows
+### Validación y mantenimiento
+
+```bash
+npm run doctor           # Diagnóstico completo del sistema
+npm run verify           # Verificar integridad del pipeline
+npm run normalize        # Normalizar estados de aplicaciones
+npm run dedup            # Eliminar duplicados en tracker
+npm run merge            # Fusionar cambios en tracker
+npm run sync-check       # Verificar sincronización CV-profile
+```
+
+### Búsqueda y herramientas
+
+```bash
+npm run scan             # Escanear portales por nuevas ofertas
+npm run liveness         # Verificar si ofertas están activas
+npm run pdf              # Generar PDF del CV
+npm run email-packet     # Enviar paquete por correo
+npm run update:check     # Verificar actualizaciones disponibles
+npm run update           # Aplicar actualización
+npm run rollback         # Revertir a versión anterior
+```
 
 ---
 
-## Buenas practicas de uso
+## 📋 Buenas prácticas de uso
 
-- No subas datos personales al repositorio si lo vas a compartir.
-- Usa la carpeta `output/` solo para archivos generados locales.
-- Revisa siempre los materiales antes de enviarlos.
-- No uses el sistema para postular en masa sin criterio.
+### Seguridad y privacidad
+
+- ✅ **NO subas datos personales públicamente** si compartirás el repo
+- ✅ **Guarda `config/profile.yml` en `.gitignore`** si vas a hacer commits
+- ✅ **Revisa siempre antes de enviar**: PDF, email, datos personales
+- ✅ **Usa `.gitignore`** para `output/`, `data/`, `reports/`
+
+### Calidad de aplicaciones
+
+- 🎯 **Aplica estratégicamente**, no en masa
+- 🎯 **Personaliza siempre**: adapta CV y texto a la oferta
+- 🎯 **Revisa el score**: no apliques a ofertas < 4.0/5 sin razón
+- 🎯 **Menos es más**: 5 aplicaciones buenas > 50 genéricas
+
+### Mantenimiento del sistema
+
+- 🔄 **Mantén actualizado**: `npm run update:check` regularmente
+- 🔄 **Valida datos**: `npm run doctor` periódicamente
+- 🔄 **Sincroniza CV**: `npm run sync-check` antes de generar PDFs
+- 🔄 **Normaliza tracker**: `npm run normalize` después de cambios manuales
 
 ---
 
-## Documentacion extra
+## 📚 Documentación adicional
 
-Si queres ir mas a fondo, mira:
+Para información más detallada, consulta:
 
-- [docs/SETUP.md](docs/SETUP.md)
+| Documento | Contenido |
+|-----------|----------|
+| [**docs/SETUP.md**](docs/SETUP.md) | Instalación avanzada y troubleshooting |
+| [**docs/ARCHITECTURE.md**](docs/ARCHITECTURE.md) | Arquitectura interna del sistema |
+| [**docs/SCRIPTS.md**](docs/SCRIPTS.md) | Referencia completa de scripts |
+| [**docs/CUSTOMIZATION.md**](docs/CUSTOMIZATION.md) | Cómo personalizar arquetipos y criterios |
+| [**CHANGELOG.md**](CHANGELOG.md) | Historial de cambios y nuevas features |
+| [**CLAUDE.md**](CLAUDE.md) | Instrucciones para integración con Claude |
+| [**DATA_CONTRACT.md**](DATA_CONTRACT.md) | Contrato de datos: qué no auto-actualizar |
+
+---
+
+## 🔗 Enlaces útiles
+
+- 📖 [Documentación oficial](docs/)
+- 💬 [Reportar un bug](https://github.com/Carabantech/busquedatrabajo/issues)
+- 💡 [Sugerencias y features](https://github.com/Carabantech/busquedatrabajo/discussions)
+- 📦 [Historial de versiones](CHANGELOG.md)
+
+---
+
+## 📜 Licencia
+
+Este proyecto está bajo licencia **MIT**. Consulta [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 💪 Contribuciones
+
+¿Quieres mejorar career-ops?
+
+1. Fork el repositorio
+2. Crea una rama: `git checkout -b feature/mi-mejora`
+3. Haz commit: `git commit -m "feat: añade mejora"`
+4. Push: `git push origin feature/mi-mejora`
+5. Abre un Pull Request
+
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
+
+---
+
+## ⚖️ Disclaimer
+
+Este sistema está diseñado para **mejorar la calidad de tus aplicaciones**, no para spam masivo. 
+
+**Responsabilidad ética:**
+- Solo aplica a ofertas que realmente te interesan
+- Respeta el tiempo de los reclutadores
+- No uses este sistema para postulaciones sin criterio
+
+---
+
+**Creado con ❤️ para simplificar tu búsqueda laboral.**
+
+*Versión: 1.3.0 | Última actualización: Abril 2026*
 - [docs/SCRIPTS.md](docs/SCRIPTS.md)
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 - [docs/CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
