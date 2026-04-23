@@ -81,6 +81,8 @@ export default function CareerWorkflow() {
 
   const workflow = payload?.state;
   const analysis = payload?.analysis;
+  const tools = payload?.tools || {};
+  const dashboardTool = tools.dashboard || {};
   const selectedCount = useMemo(() => workflow?.selectedJobIds?.length || 0, [workflow]);
   const activeCandidate = useMemo(
     () => payload?.candidates?.find(item => item.id === payload?.activeCandidateId),
@@ -251,6 +253,18 @@ export default function CareerWorkflow() {
     });
   }
 
+  async function handleLaunchDashboard() {
+    startTransition(async () => {
+      try {
+        const nextPayload = await requestJson('/api/dashboard', { method: 'POST' });
+        hydrate(nextPayload);
+        setMessage('good', nextPayload.dashboard?.message || 'Dashboard abierto correctamente.');
+      } catch (error) {
+        setMessage('warn', error.message);
+      }
+    });
+  }
+
   if (!payload) {
     return (
       <div className="page-shell">
@@ -340,6 +354,36 @@ export default function CareerWorkflow() {
                   </div>
                 );
               })}
+            </div>
+          </section>
+
+          <section className="card stack">
+            <div className="section-head compact">
+              <div>
+                <h2>Herramientas extra</h2>
+                <p>Si queres, desde aca tambien podes abrir el dashboard de terminal.</p>
+              </div>
+            </div>
+
+            <div className="tool-card">
+              <strong>Dashboard en terminal</strong>
+              <p>
+                Abre la herramienta secundaria de `dashboard/` en otra ventana para ver el pipeline fuera de la web.
+              </p>
+              <button
+                className="button ghost"
+                onClick={handleLaunchDashboard}
+                disabled={isPending || !dashboardTool.available || !dashboardTool.goInstalled}
+              >
+                Abrir dashboard
+              </button>
+              {dashboardTool.goInstalled ? (
+                <small className="tool-note">Go detectado: {dashboardTool.goVersion}</small>
+              ) : (
+                <small className="tool-note warn-text">
+                  {dashboardTool.launchBlockedReason || 'Instala Go para habilitar esta opcion.'}
+                </small>
+              )}
             </div>
           </section>
 
