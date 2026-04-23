@@ -64,6 +64,56 @@ select {
   margin-bottom: 24px;
 }
 
+.workflow-guide {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.guide-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.guide-item span {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 700;
+}
+
+.guide-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.guide-item p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.guide-item.done {
+  background: var(--good-soft);
+}
+
+.guide-item.active {
+  background: var(--accent-soft);
+}
+
+.guide-item.locked {
+  opacity: 0.72;
+}
+
 .hero-copy {
   padding: 16px 6px;
 }
@@ -296,6 +346,24 @@ select {
   font-size: 1rem;
 }
 
+.next-step-card small {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.next-step-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.15rem;
+}
+
+.next-step-card p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .tool-card p,
 .tool-note {
   margin: 0;
@@ -367,6 +435,36 @@ select {
 .field label {
   color: var(--muted);
   font-size: 0.94rem;
+}
+
+.step-card {
+  gap: 16px;
+}
+
+.locked-step {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.helper-banner {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(98, 211, 218, 0.18);
+  background: rgba(98, 211, 218, 0.08);
+}
+
+.helper-banner strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.helper-banner p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.helper-banner.locked {
+  border-color: rgba(240, 191, 99, 0.18);
+  background: rgba(240, 191, 99, 0.08);
 }
 
 .field input,
@@ -466,6 +564,12 @@ select {
   gap: 14px;
 }
 
+.search-config {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 14px;
+}
+
 .analysis-card {
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -477,6 +581,106 @@ select {
 .analysis-card h3 {
   margin: 0 0 10px;
   font-size: 1.02rem;
+}
+
+.portal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.portal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.portal-chip input {
+  margin: 0;
+}
+
+.portal-chip.active {
+  background: var(--accent-soft);
+  border-color: rgba(98, 211, 218, 0.4);
+}
+
+.portal-chip:hover {
+  transform: translateY(-1px);
+}
+
+.suggestion-list {
+  display: grid;
+  gap: 12px;
+}
+
+.suggestion-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.suggestion-item.active {
+  background: rgba(98, 211, 218, 0.08);
+  border-color: rgba(98, 211, 218, 0.26);
+}
+
+.suggestion-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.suggestion-item p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.suggestion-stats {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.history-item strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.history-item p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.mini-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .analysis-card p {
@@ -613,8 +817,10 @@ select {
 
 @media (max-width: 1080px) {
   .hero-panel,
+  .workflow-guide,
   .main-grid,
   .analysis-grid,
+  .search-config,
   .grid-2 {
     grid-template-columns: 1fr;
   }

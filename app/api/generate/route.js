@@ -1,4 +1,4 @@
-import { generateBatchForJobs, getActiveCandidateId, getActiveCandidateSnapshot, loadState, saveState } from '../../../lib/career-web';
+import { buildBatchHistoryEntry, generateBatchForJobs, getActiveCandidateId, getActiveCandidateSnapshot, loadState, saveState, updatePortalStatsFromJobs, upsertBatchHistory } from '../../../lib/career-web';
 
 export async function POST() {
   const candidateId = getActiveCandidateId();
@@ -18,9 +18,12 @@ export async function POST() {
     { name: item.htmlName, kind: 'cv html', path: item.htmlPath },
     { name: item.pdfName, kind: 'cv pdf', path: item.pdfPath },
   ]));
+  const batchEntry = buildBatchHistoryEntry(batch, selectedJobs);
 
   saveState({
     ...current,
+    portalStats: updatePortalStatsFromJobs(current.portalStats || {}, selectedJobs, 'generated'),
+    batchHistory: upsertBatchHistory(current.batchHistory || [], batchEntry),
     generateCompleted: true,
     sendCompleted: false,
     batch: {

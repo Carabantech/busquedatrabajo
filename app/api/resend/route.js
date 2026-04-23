@@ -2,19 +2,20 @@ import { getActiveCandidateId, getActiveCandidateSnapshot, loadState, patchBatch
 
 export async function POST(request) {
   const candidateId = getActiveCandidateId();
-  const { to } = await request.json();
+  const { batchId, to } = await request.json();
   const current = loadState(candidateId);
-  if (!current.generateCompleted || !current.batch?.id) {
-    return Response.json({ error: 'Primero hay que generar la tanda.' }, { status: 400 });
+
+  if (!batchId) {
+    return Response.json({ error: 'Falta indicar la tanda a reenviar.' }, { status: 400 });
   }
   if (!to) {
     return Response.json({ error: 'Falta el mail de destino.' }, { status: 400 });
   }
 
-  const result = sendBatchEmail({ batchId: current.batch.id, to });
+  const result = sendBatchEmail({ batchId, to });
   saveState({
     ...current,
-    batchHistory: patchBatchHistory(current.batchHistory || [], current.batch.id, item => ({
+    batchHistory: patchBatchHistory(current.batchHistory || [], batchId, item => ({
       ...item,
       sentHistory: [
         {
@@ -26,13 +27,13 @@ export async function POST(request) {
         ...(item.sentHistory || []),
       ],
     })),
-    sendCompleted: true,
-    email: {
+    sendCompleted: current.batch?.id === batchId ? true : current.sendCompleted,
+    email: current.batch?.id === batchId ? {
       to,
       status: result.status,
       attachments: result.attachments,
       sentAt: new Date().toISOString(),
-    },
+    } : current.email,
   }, candidateId);
 
   return Response.json(getActiveCandidateSnapshot());

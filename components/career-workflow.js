@@ -13,6 +13,8 @@ const PROFILE_FIELDS = [
   { name: 'restrictions', label: 'Restricciones u horarios a evitar', placeholder: 'No domingos, no nocturno' },
 ];
 
+const SEARCH_PORTALS = ['LinkedIn', 'Computrabajo', 'Bumeran', 'Indeed', 'HiringRoom', 'ZonaJobs', 'Adecco', 'Randstad', 'Manpower', 'Jooble'];
+
 const STAGES = [
   { key: 'profile', title: 'Perfil', description: 'Subir CV, LinkedIn y completar datos faltantes.' },
   { key: 'search', title: 'Buscar', description: 'Encontrar avisos relevantes y elegir los mejores.' },
@@ -35,6 +37,28 @@ function workflowStageStatus(workflow, stageKey) {
   return 'locked';
 }
 
+function nextStepCopy(workflow, analysis, selectedCount, recipientEmail) {
+  if (!analysis.complete) {
+    return { title: 'Completa el perfil', text: 'Carga los datos faltantes y usa Revisar perfil para verificar que todo quede listo.' };
+  }
+  if (!workflow.profileConfirmed) {
+    return { title: 'Termina el perfil', text: 'Cuando ya no queden faltantes, usa Terminar perfil para habilitar la búsqueda.' };
+  }
+  if (!workflow.searchCompleted) {
+    return { title: 'Busca avisos', text: 'Configura los portales y presiona Buscar avisos para traer resultados.' };
+  }
+  if (selectedCount === 0) {
+    return { title: 'Elige avisos', text: 'Marca al menos un aviso para poder generar los archivos.' };
+  }
+  if (!workflow.generateCompleted) {
+    return { title: 'Genera los archivos', text: 'Presiona Generar archivos para crear los textos y PDFs de postulación.' };
+  }
+  if (!recipientEmail) {
+    return { title: 'Escribe un mail', text: 'Carga un correo de destino para poder enviar o reenviar la tanda.' };
+  }
+  return { title: 'Comparte la tanda', text: 'Ya puedes guardar los archivos en carpeta local o enviarlos por mail.' };
+}
+
 export default function CareerWorkflow() {
   const [payload, setPayload] = useState(null);
   const [linkedIn, setLinkedIn] = useState('');
@@ -49,6 +73,13 @@ export default function CareerWorkflow() {
     erpTools: '',
     mobility: '',
     restrictions: '',
+  });
+  const [searchForm, setSearchForm] = useState({
+    enabledPortals: SEARCH_PORTALS,
+    searchMode: 'ambos',
+    searchLocation: '',
+    requiredKeywords: '',
+    excludedKeywords: '',
   });
   const [notice, setNotice] = useState(null);
   const [isPending, startTransition] = useTransition();
@@ -77,20 +108,40 @@ export default function CareerWorkflow() {
       mobility: nextPayload.analysis?.profileInputs?.mobility || '',
       restrictions: nextPayload.analysis?.profileInputs?.restrictions || '',
     });
+    setSearchForm({
+      enabledPortals: nextPayload.analysis?.profileInputs?.enabledPortals?.length
+        ? nextPayload.analysis.profileInputs.enabledPortals
+        : SEARCH_PORTALS,
+      searchMode: nextPayload.analysis?.profileInputs?.searchMode || 'ambos',
+      searchLocation: nextPayload.analysis?.profileInputs?.searchLocation || nextPayload.profile?.location?.city || '',
+      requiredKeywords: nextPayload.analysis?.profileInputs?.requiredKeywords || '',
+      excludedKeywords: nextPayload.analysis?.profileInputs?.excludedKeywords || '',
+    });
   }
 
-  const workflow = payload?.state;
-  const analysis = payload?.analysis;
+  const workflow = payload?.state || {};
+  const analysis = payload?.analysis || { complete: false, missing: [], recommendations: [], profileInputs: {} };
   const tools = payload?.tools || {};
   const dashboardTool = tools.dashboard || {};
+  const suggestedPortals = payload?.suggestedPortals || [];
+  const searchHistory = workflow?.searchHistory || [];
+  const batchHistory = workflow?.batchHistory || [];
   const selectedCount = useMemo(() => workflow?.selectedJobIds?.length || 0, [workflow]);
   const activeCandidate = useMemo(
     () => payload?.candidates?.find(item => item.id === payload?.activeCandidateId),
     [payload]
   );
+  const nextStep = nextStepCopy(workflow, analysis, selectedCount, recipientEmail);
 
   function setMessage(type, text) {
     setNotice({ type, text });
+  }
+
+  function buildProfileInputs() {
+    return {
+      ...profileForm,
+      ...searchForm,
+    };
   }
 
   async function handleCvUpload(event) {
@@ -150,7 +201,7 @@ export default function CareerWorkflow() {
         hydrate(await requestJson('/api/profile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ linkedin: linkedIn, profileInputs: profileForm }),
+          body: JSON.stringify({ linkedin: linkedIn, profileInputs: buildProfileInputs() }),
         }));
         setMessage('good', 'Datos base guardados.');
       } catch (error) {
@@ -165,7 +216,7 @@ export default function CareerWorkflow() {
         const nextPayload = await requestJson('/api/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ profileInputs: profileForm }),
+          body: JSON.stringify({ profileInputs: buildProfileInputs() }),
         });
         hydrate(nextPayload);
         setMessage(nextPayload.analysis.complete ? 'good' : 'info', nextPayload.analysis.complete
@@ -183,7 +234,7 @@ export default function CareerWorkflow() {
         hydrate(await requestJson('/api/confirm-profile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ profileInputs: profileForm }),
+          body: JSON.stringify({ profileInputs: buildProfileInputs() }),
         }));
         setMessage('good', 'Perfil confirmado. Ya se habilito la busqueda.');
       } catch (error) {
@@ -195,7 +246,11 @@ export default function CareerWorkflow() {
   async function handleSearch() {
     startTransition(async () => {
       try {
-        const nextPayload = await requestJson('/api/search', { method: 'POST' });
+        const nextPayload = await requestJson('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ profileInputs: buildProfileInputs() }),
+        });
         hydrate(nextPayload);
         setMessage('good', `Busqueda completada con ${nextPayload.state.jobs.length} avisos rankeados.`);
       } catch (error) {
@@ -214,6 +269,83 @@ export default function CareerWorkflow() {
     } catch (error) {
       setMessage('warn', error.message);
     }
+  }
+
+  function togglePortalSelection(portal) {
+    setSearchForm(current => {
+      const nextPortals = current.enabledPortals.includes(portal)
+        ? current.enabledPortals.filter(item => item !== portal)
+        : [...current.enabledPortals, portal];
+
+      return {
+        ...current,
+        enabledPortals: nextPortals.length ? nextPortals : current.enabledPortals,
+      };
+    });
+  }
+
+  function activateSuggestedPortals(portals) {
+    setSearchForm(current => ({
+      ...current,
+      enabledPortals: [...new Set([...current.enabledPortals, ...portals])],
+    }));
+  }
+
+  async function rerunSearch(searchEntry) {
+    const profileInputs = {
+      ...buildProfileInputs(),
+      ...(searchEntry.preferences || {}),
+    };
+    setSearchForm(current => ({
+      ...current,
+      ...(searchEntry.preferences || {}),
+    }));
+
+    startTransition(async () => {
+      try {
+        const nextPayload = await requestJson('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ profileInputs }),
+        });
+        hydrate(nextPayload);
+        setMessage('good', 'Busqueda repetida usando una configuracion del historial.');
+      } catch (error) {
+        setMessage('warn', error.message);
+      }
+    });
+  }
+
+  async function handleRegenerate(batchId) {
+    startTransition(async () => {
+      try {
+        const nextPayload = await requestJson('/api/regenerate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ batchId }),
+        });
+        hydrate(nextPayload);
+        setMessage('good', 'Tanda regenerada desde el historial.');
+      } catch (error) {
+        setMessage('warn', error.message);
+      }
+    });
+  }
+
+  async function handleResend(batchId) {
+    startTransition(async () => {
+      try {
+        const nextPayload = await requestJson('/api/resend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ batchId, to: recipientEmail }),
+        });
+        hydrate(nextPayload);
+        setMessage('good', `Tanda reenviada a ${recipientEmail}.`);
+      } catch (error) {
+        setMessage('warn', error.message);
+      }
+    });
   }
 
   async function handleGenerate() {
@@ -295,9 +427,24 @@ export default function CareerWorkflow() {
         </div>
       </section>
 
+      <section className="workflow-guide card">
+        {STAGES.map((stage, index) => {
+          const status = workflowStageStatus(workflow, stage.key);
+          return (
+            <div key={stage.key} className={`guide-item ${status}`}>
+              <span>{index + 1}</span>
+              <div>
+                <strong>{stage.title}</strong>
+                <p>{stage.description}</p>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
       <div className="main-grid">
         <aside className="sidebar stack">
-          <section className="card stack">
+          <section className={`card stack step-card ${!workflow.searchCompleted ? 'locked-step' : ''}`}>
             <div className="section-head compact">
               <div>
                 <h2>Candidatos</h2>
@@ -334,7 +481,7 @@ export default function CareerWorkflow() {
             </div>
           </section>
 
-          <section className="card stack">
+          <section className="card stack step-card">
             <div className="section-head compact">
               <div>
                 <h2>Progreso</h2>
@@ -357,7 +504,7 @@ export default function CareerWorkflow() {
             </div>
           </section>
 
-          <section className="card stack">
+          <section className="card stack step-card">
             <div className="section-head compact">
               <div>
                 <h2>Herramientas extra</h2>
@@ -392,16 +539,27 @@ export default function CareerWorkflow() {
               {notice.text}
             </div>
           )}
+
+          <div className="card next-step-card">
+            <small>Que sigue ahora</small>
+            <strong>{nextStep.title}</strong>
+            <p>{nextStep.text}</p>
+          </div>
         </aside>
 
         <main className="content stack">
           <section className="card stack">
             <div className="section-head">
               <div>
-                <h2>1. Perfil base</h2>
-                <p>Subi CV, agregá LinkedIn y deja el perfil listo para analizar.</p>
+                <h2>Paso 1. Carga inicial</h2>
+                <p>Empieza subiendo el CV y pegando el link de LinkedIn del candidato.</p>
               </div>
               <span className={`stage-tag ${analysis.complete ? 'done' : 'active'}`}>perfil</span>
+            </div>
+
+            <div className="helper-banner">
+              <strong>Primero guarda lo básico.</strong>
+              <p>Con eso la app ya puede empezar a analizar el perfil y sugerir mejores búsquedas.</p>
             </div>
 
             <div className="grid-2">
@@ -422,7 +580,7 @@ export default function CareerWorkflow() {
 
             <div className="actions">
               <button className="button ghost" onClick={handleProfileSave} disabled={isPending}>
-                Guardar datos base
+                Guardar perfil
               </button>
             </div>
           </section>
@@ -430,10 +588,15 @@ export default function CareerWorkflow() {
           <section className="card stack">
             <div className="section-head">
               <div>
-                <h2>2. Analizar</h2>
-                <p>Te muestra exactamente qué falta para dejar al candidato listo.</p>
+                <h2>Paso 2. Completa el perfil</h2>
+                <p>La app te muestra qué falta y te ayuda a dejar el perfil listo para buscar.</p>
               </div>
               <span className={`stage-tag ${analysis.complete ? 'done' : 'active'}`}>analizar</span>
+            </div>
+
+            <div className="helper-banner">
+              <strong>Completa lo que falte y revisa.</strong>
+              <p>Cuando ya no haya faltantes, usa Terminar perfil para habilitar la búsqueda.</p>
             </div>
 
             <div className="grid-2">
@@ -451,10 +614,10 @@ export default function CareerWorkflow() {
 
             <div className="actions">
               <button className="button secondary" onClick={handleAnalyze} disabled={isPending}>
-                Analizar
+                Revisar perfil
               </button>
               <button className="button" onClick={handleConfirmProfile} disabled={isPending || !analysis.complete}>
-                Confirmar perfil
+                Terminar perfil
               </button>
             </div>
 
@@ -478,18 +641,158 @@ export default function CareerWorkflow() {
             </div>
           </section>
 
-          <section className="card stack">
+          <section className={`card stack step-card ${!workflow.profileConfirmed ? 'locked-step' : ''}`}>
             <div className="section-head">
               <div>
-                <h2>3. Buscar</h2>
-                <p>La busqueda ahora mezcla portales, parsea snippets y rankea por match.</p>
+                <h2>Paso 3. Busca avisos</h2>
+                <p>Elige dónde buscar, ajusta filtros simples y trae los avisos más compatibles.</p>
               </div>
               <span className={`stage-tag ${workflow.searchCompleted ? 'done' : workflow.profileConfirmed ? 'active' : 'locked'}`}>buscar</span>
             </div>
 
+            {!workflow.profileConfirmed && (
+              <div className="helper-banner locked">
+                <strong>Este paso se habilita después de terminar el perfil.</strong>
+                <p>Primero completa y confirma el perfil del candidato.</p>
+              </div>
+            )}
+
+            <div className="search-config">
+              <div className="analysis-card">
+                <h3>Portales</h3>
+                <div className="portal-grid">
+                  {SEARCH_PORTALS.map(portal => (
+                    <label key={portal} className={`portal-chip ${searchForm.enabledPortals.includes(portal) ? 'active' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={searchForm.enabledPortals.includes(portal)}
+                        onChange={() => togglePortalSelection(portal)}
+                      />
+                      <span>{portal}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="analysis-card">
+                <h3>Preferencias de busqueda</h3>
+                <div className="grid-2">
+                  <div className="field">
+                    <label>Modalidad a priorizar</label>
+                    <select
+                      value={searchForm.searchMode}
+                      onChange={(event) => setSearchForm(current => ({ ...current, searchMode: event.target.value }))}
+                    >
+                      <option value="ambos">Presencial, hibrido y remoto</option>
+                      <option value="presencial">Solo presencial</option>
+                      <option value="hibrido">Solo hibrido</option>
+                      <option value="remoto">Solo remoto</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label>Ubicacion para buscar</label>
+                    <input
+                      value={searchForm.searchLocation}
+                      placeholder="Ej: Mendoza, Buenos Aires o Remoto Argentina"
+                      onChange={(event) => setSearchForm(current => ({ ...current, searchLocation: event.target.value }))}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Palabras clave obligatorias</label>
+                    <input
+                      value={searchForm.requiredKeywords}
+                      placeholder="Ej: SAP, compras, supply chain"
+                      onChange={(event) => setSearchForm(current => ({ ...current, requiredKeywords: event.target.value }))}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Palabras a excluir</label>
+                    <input
+                      value={searchForm.excludedKeywords}
+                      placeholder="Ej: nocturno, domingo, ventas"
+                      onChange={(event) => setSearchForm(current => ({ ...current, excludedKeywords: event.target.value }))}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {suggestedPortals.length > 0 && (
+              <div className="analysis-card">
+                <div className="section-head compact">
+                  <div>
+                    <h3>Portales sugeridos</h3>
+                    <p>La app recomienda estos portales segun el perfil y la zona cargada.</p>
+                  </div>
+                  <button
+                    className="button ghost"
+                    onClick={() => activateSuggestedPortals(suggestedPortals.map(item => item.portal))}
+                    disabled={isPending}
+                  >
+                    Activar sugeridos
+                  </button>
+                </div>
+                <div className="suggestion-list">
+                  {suggestedPortals.map(item => (
+                    <div key={item.portal} className={`suggestion-item ${item.active ? 'active' : ''}`}>
+                      <div>
+                        <strong>{item.portal}</strong>
+                        <p>{item.reason}</p>
+                        {item.stats && (
+                          <small className="suggestion-stats">
+                            Busquedas {item.stats.searches || 0} · resultados {item.stats.results || 0} · seleccionados {item.stats.selected || 0}
+                          </small>
+                        )}
+                      </div>
+                      <button
+                        className="button ghost"
+                        onClick={() => activateSuggestedPortals([item.portal])}
+                        disabled={isPending || searchForm.enabledPortals.includes(item.portal)}
+                      >
+                        {searchForm.enabledPortals.includes(item.portal) ? 'Activo' : 'Activar'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {searchHistory.length > 0 && (
+              <div className="analysis-card">
+                <div className="section-head compact">
+                  <div>
+                    <h3>Historial de busquedas</h3>
+                    <p>Te deja repetir rapidamente una configuracion anterior.</p>
+                  </div>
+                </div>
+                <div className="history-list">
+                  {searchHistory.slice(0, 6).map(item => (
+                    <div key={item.id} className="history-item">
+                      <div>
+                        <strong>{item.resultsCount} resultados</strong>
+                        <p>
+                          {item.preferences?.searchLocation || 'Sin ubicacion'} · {item.preferences?.searchMode || 'ambos'} · {item.portalsWithResults?.join(', ') || 'sin portales'}
+                        </p>
+                        <small className="suggestion-stats">
+                          {new Date(item.searchedAt).toLocaleString('es-AR')}
+                        </small>
+                      </div>
+                      <button
+                        className="button ghost"
+                        onClick={() => rerunSearch(item)}
+                        disabled={isPending || !workflow.profileConfirmed}
+                      >
+                        Buscar de nuevo
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="actions">
               <button className="button" onClick={handleSearch} disabled={isPending || !workflow.profileConfirmed}>
-                Buscar trabajos
+                Buscar avisos
               </button>
             </div>
 
@@ -537,11 +840,18 @@ export default function CareerWorkflow() {
           <section className="card stack">
             <div className="section-head">
               <div>
-                <h2>4. Generar y enviar</h2>
-                <p>Genera los `.md` y `.pdf` seleccionados y luego manda la tanda por mail.</p>
+                <h2>Paso 4. Genera y comparte</h2>
+                <p>Con los avisos elegidos, crea los archivos finales y decide si los guardas o los envías.</p>
               </div>
               <span className={`stage-tag ${workflow.generateCompleted ? 'done' : workflow.searchCompleted ? 'active' : 'locked'}`}>pipeline</span>
             </div>
+
+            {!workflow.searchCompleted && (
+              <div className="helper-banner locked">
+                <strong>Este paso se habilita después de buscar avisos.</strong>
+                <p>Busca avisos y marca al menos uno para poder generar archivos.</p>
+              </div>
+            )}
 
             <div className="actions">
               <button className="button secondary" onClick={handleGenerate} disabled={isPending || !workflow.searchCompleted || selectedCount === 0}>
@@ -588,6 +898,38 @@ export default function CareerWorkflow() {
               <div className="notice info">
                 Ultima exportacion local: <strong>{workflow.export.exportedTo}</strong><br />
                 Archivos copiados: <strong>{workflow.export.files}</strong>
+              </div>
+            )}
+
+            {batchHistory.length > 0 && (
+              <div className="analysis-card">
+                <div className="section-head compact">
+                  <div>
+                    <h3>Historial de tandas</h3>
+                    <p>Reusa tandas anteriores para regenerar o reenviar sin rehacer todo.</p>
+                  </div>
+                </div>
+                <div className="history-list">
+                  {batchHistory.slice(0, 6).map(item => (
+                    <div key={item.id} className="history-item">
+                      <div>
+                        <strong>{item.jobCount} avisos · {item.filesCount} archivos</strong>
+                        <p>{item.jobs?.map(job => `${job.company} - ${job.title}`).slice(0, 2).join(' | ') || 'Tanda sin detalle'}</p>
+                        <small className="suggestion-stats">
+                          {new Date(item.createdAt).toLocaleString('es-AR')} · envios {item.sentHistory?.length || 0} · exportaciones {item.exportHistory?.length || 0}
+                        </small>
+                      </div>
+                      <div className="mini-actions">
+                        <button className="button ghost" onClick={() => handleRegenerate(item.id)} disabled={isPending}>
+                          Regenerar
+                        </button>
+                        <button className="button ghost" onClick={() => handleResend(item.id)} disabled={isPending || !recipientEmail}>
+                          Reenviar
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </section>

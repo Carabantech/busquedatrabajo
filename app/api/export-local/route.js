@@ -1,4 +1,4 @@
-import { exportBatchToLocalFolder, getActiveCandidateId, getActiveCandidateSnapshot, loadState, saveState } from '../../../lib/career-web';
+import { exportBatchToLocalFolder, getActiveCandidateId, getActiveCandidateSnapshot, loadState, patchBatchHistory, saveState } from '../../../lib/career-web';
 
 export async function POST() {
   const candidateId = getActiveCandidateId();
@@ -12,6 +12,17 @@ export async function POST() {
 
   saveState({
     ...current,
+    batchHistory: patchBatchHistory(current.batchHistory || [], current.batch.id, item => ({
+      ...item,
+      exportHistory: [
+        {
+          exportedTo: result.exportedTo,
+          files: result.files,
+          exportedAt: new Date().toISOString(),
+        },
+        ...(item.exportHistory || []),
+      ],
+    })),
     export: {
       exportedTo: result.exportedTo,
       files: result.files,
