@@ -382,6 +382,14 @@ Para información más detallada, consulta:
 
 ---
 
+## 👤 Contacto
+
+**Autor/Maintainer:** [@carabantech](https://github.com/carabantech)
+
+¿Preguntas, sugerencias o feedback? Abre un issue o contacta directamente en GitHub.
+
+---
+
 ## 📜 Licencia
 
 Este proyecto está bajo licencia **MIT**. Consulta [LICENSE](LICENSE) para más detalles.
