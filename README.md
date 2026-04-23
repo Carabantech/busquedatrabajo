@@ -1,210 +1,322 @@
-# career-ops
+# Career Ops
 
-> **AI-powered job search automation** — Evalúa ofertas, genera CVs personalizados, escanea portales, rastrrea aplicaciones y negocia salarios. Construido con Claude Code.
+Herramienta local para organizar una busqueda laboral asistida por IA.
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Changelog](https://img.shields.io/badge/changelog-CHANGELOG.md-informational.svg)](CHANGELOG.md)
-[![Discord](https://img.shields.io/badge/community-Discord-7289da.svg)](https://discord.gg/8pRpHETxa4)
+Este proyecto sirve para:
+- guardar el perfil de un candidato
+- cargar su CV y datos complementarios
+- buscar ofertas que encajen mejor con ese perfil
+- generar materiales de postulacion (`.md`, `.html`, `.pdf`)
+- enviar o exportar esos materiales
+- llevar un seguimiento ordenado de la busqueda
 
-## 🎯 Qué es career-ops
+No es un servicio web alojado. Todo se usa **en tu computadora**, dentro del repo.
 
-Un sistema de automatización de búsqueda de empleo construido en **Claude Code**
+---
 
-**No es un scraper genérico.** Este es un pipeline completo de búsqueda de empleo con:
-- ✅ Evaluación inteligente de ofertas (A-F scoring)
-- ✅ Generación de CVs personalizados en HTML/PDF
-- ✅ Escaneo cero-token de 45+ portales de empleo
-- ✅ Rastreador de aplicaciones con reportes
-- ✅ Preparación para entrevistas (STAR+R stories)
-- ✅ Análisis de patrones de rechazo
-- ✅ Cadencia de follow-up inteligente
-- ✅ Soporte multiidioma (EN, DE, FR, JA)
+## Que incluye este proyecto
 
-## 🚀 Inicio rápido
+El repo combina dos cosas:
 
-### Prerequisitos
-- **Node.js** 18+ (para scripts)
-- **Claude Code** (VS Code + Copilot extensión)
-- GitHub (para rastrear aplicaciones)
+1. Un sistema base de `career-ops` con scripts, modos y utilidades para evaluar ofertas y generar CVs.
+2. Una web local hecha en `Next.js` para trabajar de forma mas visual, con pasos guiados.
 
-### Instalación
+La web local permite:
+- subir el CV
+- guardar el LinkedIn del candidato
+- analizar que datos faltan
+- buscar ofertas
+- generar archivos de postulacion
+- enviarlos por mail o copiarlos a una carpeta local
+
+---
+
+## Requisitos
+
+Antes de usar el proyecto, instala esto en tu maquina:
+
+### Obligatorio
+
+- `Git`
+- `Node.js 18+`
+- `npm`
+
+### Recomendado
+
+- `Playwright Chromium`
+  Se usa para generar PDFs de los CVs.
+- `Microsoft Outlook` en Windows
+  Se usa si queres enviar los paquetes por mail desde la app.
+
+### Opcional
+
+- `Go 1.21+`
+  Solo si queres usar el dashboard TUI de la carpeta `dashboard/`.
+
+---
+
+## Instalacion local
+
+### 1. Clonar el repositorio
 
 ```bash
-# 1. Clona el repositorio
 git clone https://github.com/Carabantech/busquedatrabajo.git
-cd career-ops
+cd busquedatrabajo
+```
 
-# 2. Instala dependencias
+### 2. Instalar dependencias
+
+```bash
 npm install
+```
 
-# 3. Verifica la instalación
+### 3. Instalar Playwright Chromium
+
+```bash
+npx playwright install chromium
+```
+
+### 4. Verificar que todo este bien
+
+```bash
 npm run doctor
 ```
 
-### Tu primer uso
-
-1. **Pega una URL de oferta de empleo** → El sistema la evalúa automáticamente
-2. **Genera un reporte** con score A-F, análisis de salario, fit cultural
-3. **Genera un CV personalizado** en PDF listo para aplicar
-4. **Rastrrea la aplicación** en el tracker
-5. **Automatiza el escaneo** de portales cada 3 días
-
-## 📚 Comandos principales
+Si queres chequear la integridad del pipeline:
 
 ```bash
-npm run doctor           # Diagnóstico del sistema
-npm run verify          # Verifica integridad del tracker
-npm run normalize       # Normaliza estados de aplicaciones
-npm run merge          # Fusiona adiciones al tracker
-npm run pdf            # Genera CVs en PDF
-npm run scan           # Escanea portales de empleo
-npm run liveness       # Verifica URLs activas
-npm run dedup          # Elimina duplicados
+npm run verify
 ```
-
-## 📐 Arquitectura
-
-```
-career-ops/
-├── modes/              # Modos de Claude (evaluación, aplicación, escaneo, etc.)
-│   ├── _shared.md      # Lógica compartida del sistema
-│   ├── _profile.md     # Tus customizaciones personales
-│   ├── oferta.md       # Evaluación de ofertas
-│   ├── apply.md        # Asistente de aplicación
-│   └── ...
-├── data/               # Tu información personal
-│   ├── applications.md # Rastreador de aplicaciones
-│   └── pipeline.md     # Inbox de URLs pendientes
-├── config/
-│   └── profile.yml     # Tu perfil, roles, salario, etc.
-├── portals.yml         # Configuración de portales (45+ compañías)
-├── cv.md               # Tu CV en markdown (fuente única)
-├── reports/            # Reportes de evaluación
-├── interview-prep/     # Banco de historias STAR+R
-├── output/             # CVs generados + kits de aplicación
-└── *.mjs              # Scripts de automatización
-```
-
-## 🛠️ Flujos principales
-
-### 1️⃣ Evaluar una oferta
-```
-Pega URL → Sistema evalúa → Score A-F → Reporte → Tracker
-```
-
-### 2️⃣ Generar PDF personalizado
-```
-Tu CV.md → Templating → PDF nativo → Listo para aplicar
-```
-
-### 3️⃣ Escanear portales
-```
-45+ portales → Zero-token API scanning → Dedup → Pipeline de URLs
-```
-
-### 4️⃣ Rastrrea aplicaciones
-```
-Aplicación enviada → Status update → Follow-up on day 7/14/30
-```
-
-## ⚙️ Customización
-
-Todo es personalizable. El sistema aprende de ti:
-
-- **Archetypes:** Roles objetivo, criterios de fit, dealbreakers
-- **Scoring:** Ajusta pesos de salario, ubicación, cultura, visibilidad
-- **Portales:** Añade/quita compañías, ajusta filtros de búsqueda
-- **Modos:** Idiomas (DE, FR, JA), scripts, templates
-- **Narrativa:** Tu pitch único, superpoder, logros
-
-Solo edita `modes/_profile.md` o `config/profile.yml` — la estructura del sistema nunca se sobrescribe en updates.
-
-## 📊 Casos de uso
-
-| Caso | Comando |
-|------|---------|
-| Evaluar una JD | Pega URL en el chat |
-| Comparar ofertas | `/career-ops ofertas` |
-| Generar CV personalizado | `/career-ops pdf` + selector de empresa |
-| Research de empresa | `/career-ops deep` |
-| Outreach LinkedIn | `/career-ops contacto` |
-| Ver status | `/career-ops tracker` |
-| Escanear portales | `/career-ops scan` |
-| Analizar rechazos | `/career-ops patterns` |
-
-## 📈 Resultados reales
-
-Sistema original usado por Santiago para:
-- **740+** ofertas evaluadas y calificadas
-- **100+** CVs personalizados generados
-- **45+** portales escaneados con zero tokens
-- **1** oferta de Head of Applied AI conseguida
-
-## 🌍 Soporte multiidioma
-
-- **English** (default) — `modes/`
-- **Deutsch (DACH)** — `modes/de/` — 13. Monatsgehalt, Probezeit, Kündigungsfrist, etc.
-- **Français** — `modes/fr/` — CDI, RTT, convention collective SYNTEC, etc.
-- **日本語** — `modes/ja/` — 正社員, 賞与, 退職金, etc.
-
-Activa con `language.modes_dir` en `config/profile.yml`.
-
-## 🔒 Ethical Guidelines
-
-**Quality > Quantity**
-
-- ❌ No spam a compañías
-- ❌ No aplicaciones genéricas bajo 4.0/5
-- ✅ Aplica solo donde hay fit real
-- ✅ Cada aplicación cuesta tiempo
-
-El sistema filtra para ti. Tu CVs personalizados, no templates.
-
-## 🔄 Sistema de updates
-
-```bash
-npm run update:check    # Verifica updares
-npm run update         # Aplica updates (tu data está protegida)
-npm run rollback       # Revierte a versión anterior
-```
-
-**Importante:** Tu `cv.md`, `config/profile.yml`, `modes/_profile.md`, `data/`, `reports/` **nunca** se sobrescriben. Solo el código del sistema se actualiza.
-
-## 📖 Documentación
-
-- **[CLAUDE.md](CLAUDE.md)** — Instrucciones completas, data contract, ethical use
-- **[SETUP.md](docs/SETUP.md)** — Onboarding paso a paso
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** — Detalles técnicos
-- **[CUSTOMIZATION.md](docs/CUSTOMIZATION.md)** — Cómo personalizarlo
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** — Cómo contribuir
-
-## 🤝 Comunidad
-
-- **Discord:** [discord.gg/8pRpHETxa4](https://discord.gg/8pRpHETxa4)
-- **Issues:** [Abre una discusión](https://github.com/Carabantech/busquedatrabajo/issues)
-- **Governance:** Ver [GOVERNANCE.md](GOVERNANCE.md)
-
-## 📜 Licencia
-
-MIT — Usa como quieras, comercialmente o no. Ver [LICENSE](LICENSE).
 
 ---
 
-## 🙏 Inspiración
+## Como usar el proyecto
 
-Este proyecto fue inspirado y basado en el trabajo original de [Santiago Fernández de Valderrama](https://santifer.io). Su portfolio también es código abierto: [cv-santiago](https://github.com/santifer/cv-santiago) — siéntete libre de forkarlo.
+Tenes dos formas principales de uso.
 
-## ⚖️ Aviso legal
+### Opcion A: usar la web local
 
-Ver [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) para términos completos.
+Es la forma mas facil para la mayoria de las personas.
+
+#### Levantar la web
+
+```bash
+npm run dev
+```
+
+Despues abri:
+
+```text
+http://localhost:3000
+```
+
+#### Flujo dentro de la web
+
+1. Crear o seleccionar un candidato
+2. Subir el CV
+3. Agregar el link de LinkedIn
+4. Completar los datos faltantes del perfil
+5. Pulsar `Analizar`
+6. Confirmar el perfil
+7. Pulsar `Buscar`
+8. Elegir los avisos que queres usar
+9. Pulsar `Generar`
+10. Elegir una de estas salidas:
+    - `Enviar paquete`
+    - `Guardar en carpeta local`
+
+#### Que hace cada paso
+
+- `Analizar`
+  Revisa si faltan datos importantes del candidato.
+
+- `Buscar`
+  Intenta encontrar ofertas compatibles usando buscadores y portales como:
+  - LinkedIn
+  - Computrabajo
+  - Bumeran
+  - Indeed
+  - HiringRoom
+
+- `Generar`
+  Crea una tanda de archivos para los avisos seleccionados:
+  - texto de postulacion `.md`
+  - CV adaptado en `.html`
+  - CV final en `.pdf`
+
+- `Enviar paquete`
+  Manda los archivos por mail usando Outlook local.
+
+- `Guardar en carpeta local`
+  Copia la misma tanda a una carpeta en:
+
+```text
+C:\output\<candidato>\<batch-id>\
+```
 
 ---
 
-**¿Listo para optimizar tu búsqueda de empleo?**
+### Opcion B: usar scripts y flujo CLI
 
-1. Clona el repositorio
-2. Corre `npm run doctor`
-3. Sigue [SETUP.md](docs/SETUP.md)
-4. Comienza a evaluar ofertas
+Si preferis trabajar con scripts directamente, tambien se puede.
 
-¡Te deseamos buena suerte en tu búsqueda! 🎯
+Comandos utiles:
+
+```bash
+npm run doctor
+npm run verify
+npm run scan
+npm run pdf
+npm run liveness
+npm run normalize
+npm run dedup
+npm run merge
+npm run email-packet
+```
+
+---
+
+## Archivos importantes
+
+### Perfil y CV
+
+- `cv.md`
+  CV fuente del candidato
+
+- `config/profile.yml`
+  Perfil principal del candidato
+
+- `modes/_profile.md`
+  Personalizacion adicional del sistema
+
+- `portals.yml`
+  Configuracion de busqueda de portales
+
+### Datos del pipeline
+
+- `data/applications.md`
+  Tracker de aplicaciones
+
+- `data/pipeline.md`
+  URLs pendientes o pipeline de ofertas
+
+### Resultados generados
+
+- `output/`
+  PDFs, HTMLs y archivos de postulacion
+
+- `output/web-batches/`
+  Tandas generadas desde la web local
+
+### Web local
+
+- `app/`
+  Rutas y endpoints de Next.js
+
+- `components/career-workflow.js`
+  Pantalla principal de la app
+
+- `lib/career-web.js`
+  Logica de candidatos, busqueda, generacion y envio
+
+---
+
+## Scripts principales
+
+### Web local
+
+```bash
+npm run dev
+npm run build
+npm run start
+```
+
+### Utilidades del proyecto
+
+```bash
+npm run doctor
+npm run verify
+npm run scan
+npm run pdf
+npm run email-packet
+```
+
+### Limpiar cache de Next.js
+
+```bash
+npm run clean
+```
+
+---
+
+## Estructura resumida del repo
+
+```text
+busquedatrabajo/
+|-- app/                    # Web local en Next.js
+|-- components/             # Componentes de interfaz
+|-- lib/                    # Logica compartida
+|-- config/                 # Perfil del candidato
+|-- data/                   # Estado local y tracker
+|-- modes/                  # Modos e instrucciones del sistema
+|-- output/                 # Archivos generados
+|-- templates/              # Templates HTML y configuraciones
+|-- cv.md                   # CV fuente
+|-- portals.yml             # Config de portales
+|-- generate-pdf.mjs        # HTML -> PDF
+|-- scan.mjs                # Busqueda / escaneo
+`-- email-packet.mjs        # Envio de paquetes por mail
+```
+
+---
+
+## Que instalar si queres usar todo
+
+Resumen rapido de lo necesario despues de bajar el repo:
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+Y si queres envio por mail desde la app:
+- Outlook instalado en Windows
+
+---
+
+## Buenas practicas de uso
+
+- No subas datos personales al repositorio si lo vas a compartir.
+- Usa la carpeta `output/` solo para archivos generados locales.
+- Revisa siempre los materiales antes de enviarlos.
+- No uses el sistema para postular en masa sin criterio.
+
+---
+
+## Documentacion extra
+
+Si queres ir mas a fondo, mira:
+
+- [docs/SETUP.md](docs/SETUP.md)
+- [docs/SCRIPTS.md](docs/SCRIPTS.md)
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- [docs/CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
+- [CLAUDE.md](CLAUDE.md)
+
+---
+
+## Estado actual del proyecto
+
+El proyecto ya esta preparado para:
+- correr localmente
+- usar multiples candidatos
+- buscar avisos
+- generar PDFs
+- enviar paquetes por mail
+- exportar tandas a carpeta local
+
+---
+
+## Licencia
+
+MIT. Ver [LICENSE](LICENSE).

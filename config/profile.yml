@@ -1,55 +1,54 @@
 # Career-Ops Profile Configuration
-# Copy this file to config/profile.yml and fill in your details.
-# This is the single source of truth for your personal data across all modes.
 
 candidate:
-  full_name: "Jane Smith"
-  email: "jane@example.com"
-  phone: "+1-555-0123"
-  location: "San Francisco, CA"
-  linkedin: "linkedin.com/in/janesmith"
-  portfolio_url: "https://janesmith.dev"
-  github: "github.com/janesmith"
-  twitter: "https://x.com/janesmith"
+  full_name: "Se completa con el nombre del candidato"
+  email: "se-completa@con-el-candidato.com"
+  phone: "+00 0000 000000"
+  location: "Se completa con la ubicacion del candidato"
+  linkedin: "linkedin.com/in/se-completa-con-el-candidato"
+  portfolio_url: "https://portfolio-del-candidato.dev"
+  github: "github.com/usuario-del-candidato"
+  twitter: "https://x.com/usuario-del-candidato"
 
 target_roles:
   primary:
-    - "Senior AI Engineer"
-    - "Staff ML Engineer"
+    - "Rol objetivo principal 1"
+    - "Rol objetivo principal 2"
   archetypes:
-    - name: "AI/ML Engineer"
-      level: "Senior/Staff"
-      fit: "primary"
-    - name: "AI Product Manager"
+    - name: "Arquetipo principal"
       level: "Senior"
+      fit: "primary"
+    - name: "Arquetipo secundario"
+      level: "Mid-Senior"
       fit: "secondary"
-    - name: "Solutions Architect"
+    - name: "Arquetipo adyacente"
       level: "Mid-Senior"
       fit: "adjacent"
 
 narrative:
-  headline: "ML Engineer turned AI product builder"
-  exit_story: "Built and sold my SaaS after 5 years. Now focused on applied AI at scale."
+  headline: "Se completa con el resumen profesional del candidato"
+  exit_story: "Se completa con la narrativa profesional del candidato."
   superpowers:
-    - "End-to-end ML pipelines"
-    - "Fast prototyping (idea to prod in 2 weeks)"
-    - "Cross-functional communication"
+    - "Fortaleza principal del candidato 1"
+    - "Fortaleza principal del candidato 2"
+    - "Fortaleza principal del candidato 3"
   proof_points:
-    - name: "Project Alpha"
-      url: "https://janesmith.dev/project-alpha"
-      hero_metric: "Reduced inference latency 40%"
-    - name: "Open Source Tool"
-      url: "https://github.com/janesmith/tool"
-      hero_metric: "2K+ GitHub stars"
+    - name: "Proyecto o experiencia destacada del candidato"
+      url: "https://ejemplo.com/proyecto"
+      hero_metric: "Resultado o metrica principal del candidato"
+    - name: "Caso o portfolio relevante del candidato"
+      url: "https://ejemplo.com/caso"
+      hero_metric: "Impacto medible"
 
 compensation:
-  target_range: "$150K-200K"
+  target_range: "Rango objetivo del candidato"
   currency: "USD"
-  minimum: "$120K"
-  location_flexibility: "Remote preferred, 1 week/month on-site possible"
+  minimum: "Minimo aceptable del candidato"
+  location_flexibility: "Se completa con modalidad y flexibilidad geografica"
 
 location:
-  country: "United States"
-  city: "San Francisco"
-  timezone: "PST"
-  visa_status: "No sponsorship needed"
+  country: "Pais del candidato"
+  city: "Ciudad del candidato"
+  timezone: "Zona horaria"
+  visa_status: "Se completa segun el candidato"
+  onsite_availability: "Se completa con disponibilidad presencial"

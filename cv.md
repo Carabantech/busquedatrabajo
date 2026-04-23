@@ -1,42 +1,46 @@
-# Jane Smith
+# Alex Chen
 
-San Francisco, CA  
-Email: jane@example.com  
-Phone: +1-555-0123  
-LinkedIn: linkedin.com/in/janesmith  
-Portfolio: https://janesmith.dev
+Austin, TX  
+Email: alex@example.com  
+LinkedIn: linkedin.com/in/alexchen  
+Portfolio: alexchen.dev  
+GitHub: github.com/alexchen
 
 ## Summary
 
-Senior AI and ML professional with experience building production systems, improving model reliability, and partnering across engineering, product, and operations. Looking for roles in applied AI, platform engineering, or technical product where strong systems thinking and execution matter.
+Full-stack AI engineer with experience building production ML systems, improving model reliability, and partnering across engineering, product, and operations. Looking for roles in applied AI, platform engineering, or technical product where strong systems thinking and execution matter.
 
 ## Experience
 
-### Example Company
-**Senior ML Engineer**  
-San Francisco, CA | 2022 - Present
+### TechFin Corp
+**Senior ML Engineer / ML Platform Lead**  
+Austin, TX | 2020 - 2024
 
-- Built and maintained production ML pipelines for customer-facing features.
-- Improved model quality, observability, and deployment reliability.
-- Worked with product and engineering teams to turn business needs into technical delivery.
+- Led ML platform work across tooling, deployment, monitoring, and team enablement.
+- Designed and maintained real-time model inference pipelines for production workloads.
+- Reduced model deployment time and improved delivery reliability with better internal systems.
 
-### Previous Company
-**Machine Learning Engineer**  
-Remote | 2019 - 2022
+### DataStartup Inc
+**ML Engineer**  
+Remote | 2018 - 2020
 
-- Developed and deployed models used in internal and external workflows.
-- Supported experimentation, evaluation, and iteration across the ML lifecycle.
-- Partnered with cross-functional teams on roadmap and implementation.
+- Built NLP workflows for classification and search ranking.
+- Improved experimentation, evaluation, and model versioning practices.
+
+## Projects
+
+- FraudShield - Real-time fraud detection framework.
+- LLM Eval Toolkit - Evaluation framework for LLM applications.
 
 ## Education
 
-### Example University
-**B.S. in Computer Science**  
-2015 - 2019
+### UT Austin
+**MS Computer Science**  
+2018
 
-## Certifications
-
-- Add certifications here if relevant
+### UC Berkeley
+**BS Computer Science**  
+2016
 
 ## Skills
 

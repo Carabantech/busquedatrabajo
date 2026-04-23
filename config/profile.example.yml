@@ -3,14 +3,14 @@
 # This is the single source of truth for your personal data across all modes.
 
 candidate:
-  full_name: "Jane Smith"
-  email: "jane@example.com"
-  phone: "+1-555-0123"
-  location: "San Francisco, CA"
-  linkedin: "linkedin.com/in/janesmith"
-  portfolio_url: "https://janesmith.dev"
-  github: "github.com/janesmith"
-  twitter: "https://x.com/janesmith"
+  full_name: "Se completa con el nombre del candidato"
+  email: "se-completa@con-el-candidato.com"
+  phone: "+00 0000 000000"
+  location: "Se completa con la ubicacion del candidato"
+  linkedin: "linkedin.com/in/se-completa-con-el-candidato"
+  portfolio_url: "https://portfolio-del-candidato.dev"
+  github: "github.com/usuario-del-candidato"
+  twitter: "https://x.com/usuario-del-candidato"
   # (Optional) Canva resume design ID for visual CV generation via /career-ops pdf.
   # Find it in your Canva design URL: https://www.canva.com/design/DAxxxxxxx/...
   # The ID starts with "D" and is 11 characters long.
@@ -35,25 +35,25 @@ target_roles:
 
 narrative:
   # Your professional headline (1 line)
-  headline: "ML Engineer turned AI product builder"
+  headline: "Se completa con el resumen profesional del candidato"
   # Your exit story — what makes you unique
-  exit_story: "Built and sold my SaaS after 5 years. Now focused on applied AI at scale."
+  exit_story: "Se completa con la narrativa profesional del candidato."
   # Your top 3-5 superpowers
   superpowers:
-    - "End-to-end ML pipelines"
-    - "Fast prototyping (idea to prod in 2 weeks)"
-    - "Cross-functional communication"
+    - "Fortaleza principal del candidato 1"
+    - "Fortaleza principal del candidato 2"
+    - "Fortaleza principal del candidato 3"
   # Proof points — projects, articles, case studies with measurable impact
   proof_points:
-    - name: "Project Alpha"
-      url: "https://janesmith.dev/project-alpha"
-      hero_metric: "Reduced inference latency 40%"
-    - name: "Open Source Tool"
-      url: "https://github.com/janesmith/tool"
-      hero_metric: "2K+ GitHub stars"
+    - name: "Proyecto o experiencia destacada del candidato"
+      url: "https://ejemplo.com/proyecto"
+      hero_metric: "Resultado o metrica principal del candidato"
+    - name: "Caso o portfolio relevante del candidato"
+      url: "https://ejemplo.com/caso"
+      hero_metric: "Impacto medible"
   # Optional: dashboard/demo URL with credentials
   # dashboard:
-  #   url: "https://janesmith.dev/demo"
+  #   url: "https://portfolio-del-candidato.dev/demo"
   #   password: "demo-2026"
 
 compensation:

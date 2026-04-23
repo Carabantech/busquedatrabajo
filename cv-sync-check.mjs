@@ -39,7 +39,7 @@ if (!existsSync(profilePath)) {
   const profileContent = readFileSync(profilePath, 'utf-8');
   const requiredFields = ['full_name', 'email', 'location'];
   for (const field of requiredFields) {
-    if (!profileContent.includes(field) || profileContent.includes(`"Jane Smith"`)) {
+    if (!profileContent.includes(field) || profileContent.includes(`"Se completa con el nombre del candidato"`)) {
       warnings.push(`config/profile.yml may still have example data. Check field: ${field}`);
       break;
     }

@@ -2,6 +2,8 @@
 data/applications.md
 data/pipeline.md
 data/scan-history.tsv
+data/candidates/
+data/career-web-state.json
 reports/*.md
 !reports/.gitkeep
 output/*
@@ -24,6 +26,7 @@ modes/_profile.md
 
 # Generated
 .resolved-prompt-*
+.next/
 node_modules/
 bun.lock
 

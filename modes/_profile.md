@@ -35,9 +35,9 @@
 ## Your Exit Narrative
 
 Use the candidate's exit story from `config/profile.yml` to frame ALL content:
-- **In PDF Summaries:** Bridge from past to future
-- **In STAR stories:** Reference proof points from article-digest.md
-- **In Draft Answers:** The transition narrative appears in the first response
+- In PDF Summaries: bridge from past to future
+- In STAR stories: reference proof points from article-digest.md
+- In Draft Answers: the transition narrative appears in the first response
 
 ## Your Cross-cutting Advantage
 
@@ -50,7 +50,7 @@ If you have a live demo/dashboard (check profile.yml), offer access in applicati
 ## Your Comp Targets
 
 **General guidance:**
-- Use WebSearch for current market data (Glassdoor, Levels.fyi, Blind)
+- Use WebSearch for current market data
 - Frame by role title, not by skills
 - Contractor rates are typically 30-50% higher than employee base
 

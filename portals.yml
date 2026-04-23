@@ -16,9 +16,6 @@ title_filter:
     - "Java "
     - "PHP"
     - "Ruby"
-    - "Embedded"
-    - "Blockchain"
-    - "Crypto"
   seniority_boost:
     - "Senior"
     - "Staff"

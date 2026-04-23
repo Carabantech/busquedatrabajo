@@ -12,6 +12,10 @@ All scripts live in the project root as `.mjs` modules and are exposed via `npm 
 | `npm run dedup` | `dedup-tracker.mjs` | Remove duplicate tracker entries |
 | `npm run merge` | `merge-tracker.mjs` | Merge batch TSVs into applications.md |
 | `npm run pdf` | `generate-pdf.mjs` | Convert HTML to ATS-optimized PDF |
+| `npm run email-packet` | `email-packet.mjs` | Attach postulaciones + PDFs and draft/send an Outlook email |
+| `npm run web:dev` | `next dev` | Run the local web workflow |
+| `npm run web:build` | `next build` | Build the local web workflow |
+| `npm run web:start` | `next start` | Start the built web workflow |
 | `npm run sync-check` | `cv-sync-check.mjs` | Validate CV/profile consistency |
 | `npm run update:check` | `update-system.mjs check` | Check for upstream updates |
 | `npm run update` | `update-system.mjs apply` | Apply upstream update |
@@ -102,6 +106,23 @@ npm run pdf -- input.html output.pdf --format=a4        # A4 (default)
 ```
 
 **Exit codes:** `0` PDF generated, `1` missing arguments or generation failure.
+
+---
+
+## email-packet
+
+Collects a candidate's `.md` application files and generated `.pdf` CVs from `output/`, attaches them to an Outlook email, and either saves it as a draft or sends it using the default Outlook account on Windows.
+
+```bash
+npm run email-packet -- --candidate=candidate --date=2026-04-23 --to=candidate@example.com --mode=draft
+npm run email-packet -- --candidate=candidate --date=2026-04-23 --to=candidate@example.com --mode=send
+```
+
+It also writes a manifest JSON to `output/{candidate}-email-packet-{date}.json` listing the files included.
+
+**Requirements:** Microsoft Outlook desktop available on Windows.
+
+**Exit codes:** `0` draft created or email sent, `1` no matching files or Outlook automation failure.
 
 ---
 

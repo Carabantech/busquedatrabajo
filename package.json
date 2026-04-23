@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "description": "AI-powered job search pipeline built on Claude Code",
   "scripts": {
+    "clean": "node clean-next.mjs",
+    "dev": "node clean-next.mjs && next dev",
+    "build": "next build",
+    "start": "next start",
     "doctor": "node doctor.mjs",
     "verify": "node verify-pipeline.mjs",
     "normalize": "node normalize-statuses.mjs",
     "dedup": "node dedup-tracker.mjs",
     "merge": "node merge-tracker.mjs",
     "pdf": "node generate-pdf.mjs",
+    "email-packet": "node email-packet.mjs",
+    "web:dev": "next dev",
+    "web:build": "next build",
+    "web:start": "next start",
     "dashboard:web": "node dashboard-web.mjs",
     "dashboard:web:open": "node dashboard-web.mjs --open",
     "sync-check": "node cv-sync-check.mjs",
@@ -34,6 +42,9 @@
   "license": "MIT",
   "dependencies": {
     "js-yaml": "^4.1.1",
-    "playwright": "^1.58.1"
+    "next": "^14.2.33",
+    "playwright": "^1.58.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
