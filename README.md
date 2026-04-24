@@ -1,448 +1,339 @@
-# 🚀 Career Ops - Sistema de Búsqueda Laboral con IA
+# Career-Ops
 
-**Una herramienta completa y privada para gestionar tu búsqueda de empleo de forma inteligente.**
+<p align="center">
+  <a href="https://x.com/santifer"><img src="docs/hero-banner.jpg" alt="Career-Ops — Sistema Multi-Agente de Busqueda de Empleo" width="800"></a>
+</p>
 
-Automatiza la búsqueda, evaluación y seguimiento de oportunidades laborales. Todo se ejecuta **localmente en tu computadora** — tu perfil, CV y datos nunca se envían a servidores externos.
+<p align="center">
+  <em>Meses mandando CVs al vacio. Asi que me construi el sistema que echaba en falta.</em><br>
+  Las empresas usan IA para descartarte. <strong>Yo le di a los candidatos IA para <em>elegirlas</em>.</strong><br>
+  <em>Ahora es open source.</em>
+</p>
 
-## ✨ Qué puedes hacer
-
-- **📋 Gestionar perfil**: Guardar y actualizar datos del candidato
-- **📄 Gestionar CV**: Subir CV y datos complementarios
-- **🔍 Buscar ofertas**: Analizar portales de empleo automáticamente
-- **⭐ Evaluar ofertas**: Scoring inteligente basado en tu perfil
-- **📝 Generar materiales**: CVs adaptados en `.md`, `.html`, `.pdf`
-- **💌 Enviar paquetes**: Aplicaciones directas por correo
-- **📊 Seguimiento**: Tracker ordenado de todas las aplicaciones
-
-## 📦 Componentes principales
-
-El proyecto integra dos capas:
-
-**1. Sistema Core (`career-ops`)**
-- Scripts de evaluación y análisis
-- Modos de trabajo especializados
-- Generación de PDFs y materiales
-- Manejo de datos en Markdown/YAML
-
-**2. Interfaz Web (Next.js)**
-- Flujo guiado paso a paso
-- Gestión visual de candidatos
-- Búsqueda y generación interactiva
-- Integración con Outlook para envíos
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white" alt="Claude Code">
+  <img src="https://img.shields.io/badge/OpenCode-111827?style=flat&logo=terminal&logoColor=white" alt="OpenCode">
+  <img src="https://img.shields.io/badge/Codex_(pronto)-6B7280?style=flat&logo=openai&logoColor=white" alt="Codex">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white" alt="Go">
+  <img src="https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white" alt="Playwright">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT">
+  <a href="https://discord.gg/8pRpHETxa4"><img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord"></a>
+  <br>
+  <img src="https://img.shields.io/badge/EN-blue?style=flat" alt="EN">
+  <img src="https://img.shields.io/badge/ES-red?style=flat" alt="ES">
+  <img src="https://img.shields.io/badge/DE-grey?style=flat" alt="DE">
+  <img src="https://img.shields.io/badge/FR-blue?style=flat" alt="FR">
+  <img src="https://img.shields.io/badge/PT--BR-green?style=flat" alt="PT-BR">
+  <img src="https://img.shields.io/badge/JA-red?style=flat" alt="JA">
+</p>
 
 ---
 
-## ⚙️ Requisitos previos
+<p align="center">
+  <img src="docs/demo.gif" alt="Career-Ops Demo" width="800">
+</p>
 
-### 🔴 Obligatorio
+<p align="center"><strong>740+ ofertas evaluadas · 100+ CVs personalizados · 1 trabajo soñado conseguido</strong></p>
 
-| Herramienta | Versión | Propósito |
-|-------------|---------|----------|
-| **Git** | Última | Control de versiones |
-| **Node.js** | 18+ | Runtime de JavaScript |
-| **npm** | 8+ | Gestor de paquetes |
+<p align="center"><a href="https://discord.gg/8pRpHETxa4"><img src="https://img.shields.io/badge/Unete_a_la_comunidad-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a></p>
 
-### 🟡 Recomendado
+## Que es esto
 
-| Herramienta | Propósito |
-|-------------|----------|
-| **Playwright** | Generar PDFs automáticamente |
-| **Microsoft Outlook** | Enviar paquetes de aplicación por correo |
+Career-Ops convierte cualquier CLI de IA en un centro de mando de busqueda de empleo. En vez de trackear aplicaciones en un spreadsheet, tienes un pipeline AI que:
 
-### 🟢 Opcional
+- **Evalua ofertas** con scoring estructurado A-F (10 dimensiones ponderadas)
+- **Genera PDFs personalizados** -- CVs ATS-optimizados por oferta
+- **Escanea portales** automaticamente (Greenhouse, Ashby, Lever, webs de empresas)
+- **Procesa en batch** -- evalua 10+ ofertas en paralelo con sub-agentes
+- **Trackea todo** en una fuente de verdad unica con checks de integridad
 
-| Herramienta | Versión | Propósito |
-|-------------|---------|----------|
-| **Go** | 1.21+ | Dashboard TUI avanzado |
+> **Importante: Esto NO es para spamear empresas.** Career-ops es un filtro -- te ayuda a encontrar las pocas ofertas que merecen tu tiempo entre cientos. El sistema recomienda encarecidamente no aplicar a nada por debajo de 4.0/5. Tu tiempo es valioso, y el del recruiter tambien. Siempre revisa antes de enviar.
 
----
+> **Aviso: las primeras evaluaciones no seran buenas.** El sistema no te conoce todavia. Dale contexto -- tu CV, tu historia profesional, tus proof points, tus preferencias, en que eres bueno, que quieres evitar. Cuanto mas lo nutras, mejor filtra. Piensa en ello como hacer onboarding a un recruiter nuevo: la primera semana necesita conocerte, luego se vuelve invaluable.
 
-## 🔧 Instalación rápida
+Construido por alguien que lo uso para evaluar 740+ ofertas, generar 100+ CVs personalizados, y conseguir un rol de Head of Applied AI. [Lee el case study completo](https://santifer.io/career-ops).
 
-### Paso 1: Clonar el repositorio
+## Features
+
+| Feature | Descripcion |
+|---------|-------------|
+| **Auto-Pipeline** | Pega una URL, obtiene evaluacion + PDF + entrada en tracker |
+| **Evaluacion A-F** | Resumen del rol, match con CV, estrategia de nivel, research de comp, personalizacion, prep de entrevista (STAR+R) |
+| **Banco de historias** | Acumula historias STAR+Reflexion entre evaluaciones -- 5-10 historias maestras que responden cualquier pregunta behavioral |
+| **Scripts de negociacion** | Frameworks de negociacion salarial, pushback de descuentos geograficos, leverage de ofertas competidoras |
+| **PDFs ATS** | CVs con keywords inyectados, diseño Space Grotesk + DM Sans |
+| **Scanner de portales** | 45+ empresas pre-configuradas (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + queries en Ashby, Greenhouse, Lever, Wellfound |
+| **Batch** | Evaluacion en paralelo con workers `claude -p` |
+| **Dashboard TUI** | Terminal UI para navegar, filtrar y ordenar tu pipeline |
+| **Dashboard Web Simple** | Genera un HTML estatico con fecha, puesto, estado, PDF y progreso del proceso |
+| **Human-in-the-Loop** | La IA evalua y recomienda, tu decides y actuas. El sistema nunca envia una aplicacion -- tu siempre tienes la ultima palabra |
+| **Integridad de pipeline** | Merge automatico, dedup, normalizacion de estados, health checks |
+
+## Inicio rapido
+
+```bash
+# 1. Clonar e instalar
+git clone https://github.com/Carabantech/busquedatrabajo.git
+cd career-ops && npm install
+npx playwright install chromium   # Necesario para generar PDFs
+
+# 2. Verificar setup
+npm run doctor                     # Valida todos los prerequisitos
+
+# 3. Configurar
+cp config/profile.example.yml config/profile.yml  # Editar con tus datos
+cp templates/portals.example.yml portals.yml       # Personalizar empresas
+
+# 4. Añadir tu CV
+# Crear cv.md en la raiz del proyecto con tu CV en markdown
+
+# 5. Personalizar con Claude
+claude   # Abrir Claude Code en este directorio
+
+# Pidele a Claude que adapte el sistema a ti:
+# "Cambia los arquetipos a roles de backend"
+# "Traduce los modes a ingles"
+# "Añade estas empresas a portals.yml"
+# "Actualiza mi perfil con este CV que te pego"
+
+# 6. Usar
+# Pega una URL de oferta o ejecuta /career-ops
+```
+
+> **El sistema esta diseñado para que Claude lo personalice.** Modes, arquetipos, scoring, scripts de negociacion -- solo pidelo. Claude lee los mismos archivos que usa, asi que sabe exactamente que editar.
+
+## Rama Clean Para Compartir
+
+Si quieres compartir el proyecto o arrancar desde cero sin arrastrar datos personales, usa la rama `clean`.
 
 ```bash
 git clone https://github.com/Carabantech/busquedatrabajo.git
-cd busquedatrabajo
-```
-
-### Paso 2: Instalar dependencias Node.js
-
-```bash
+cd career-ops
+git checkout clean
 npm install
-```
-
-### Paso 3: Instalar Playwright Chromium (para PDF)
-
-```bash
 npx playwright install chromium
 ```
 
-### Paso 4: Verificar integridad del sistema
+La rama `clean` deja el proyecto como plantilla:
+- `config/profile.yml` generico
+- `cv.md` de ejemplo
+- `modes/_profile.md` generico
+- `data/applications.md` vacio
+- `data/pipeline.md` vacio
+- sin reportes ni salidas personales
+
+Cada persona solo tiene que reemplazar su perfil, su CV y sus portales objetivo.
+
+Guia completa en [docs/SETUP.md](docs/SETUP.md).
+
+## Colaboracion Segura
+
+Si quieres que otras personas puedan descargar el repo sin modificar el repositorio principal, el flujo recomendado es:
+
+1. Dar acceso `Read` si el repositorio es privado.
+2. Proteger la rama `main` en GitHub y exigir `Pull Request` para cualquier cambio.
+3. Pedir que cada colaborador trabaje desde su propio `fork`.
+
+Flujo sugerido:
 
 ```bash
-npm run doctor
+# 1. Hacer fork en GitHub
+
+# 2. Clonar el fork personal
+git clone https://github.com/TU-USUARIO/busquedatrabajo.git
+cd career-ops
+
+# 3. Añadir el repo principal como upstream
+git remote add upstream https://github.com/Carabantech/busquedatrabajo.git
+
+# 4. Crear una rama de trabajo
+git checkout -b mi-cambio
+
+# 5. Subir cambios al fork
+git push origin mi-cambio
 ```
 
-Para validar el pipeline de datos:
+Luego, el colaborador abre un Pull Request desde su fork hacia `Carabantech/busquedatrabajo`.
+
+Con esto:
+- cualquiera puede clonar o descargar;
+- nadie escribe directamente sobre `main`;
+- todos los cambios pasan por revisión antes de mergearse.
+
+## Uso
+
+Career-ops es un unico slash command con multiples modos:
+
+```
+/career-ops                → Mostrar todos los comandos
+/career-ops {pega un JD}   → Pipeline completo (evaluar + PDF + tracker)
+/career-ops scan           → Escanear portales
+/career-ops pdf            → Generar CV ATS-optimizado
+/career-ops batch          → Evaluar ofertas en batch
+/career-ops tracker        → Ver estado de aplicaciones
+/career-ops apply          → Rellenar formularios con IA
+/career-ops pipeline       → Procesar URLs pendientes
+/career-ops contacto       → Mensaje LinkedIn outreach
+/career-ops deep           → Research profundo de empresa
+```
+
+O simplemente pega una URL o descripcion de oferta -- career-ops la detecta y ejecuta el pipeline completo.
+
+## Como funciona
+
+```
+Pegas una URL o descripcion de oferta
+        │
+        ▼
+┌──────────────────┐
+│  Deteccion de    │  Clasifica: LLMOps / Agentic / PM / SA / FDE / Transformation
+│  Arquetipo       │
+└────────┬─────────┘
+         │
+┌────────▼─────────┐
+│  Evaluacion A-F  │  Match, gaps, comp research, historias STAR
+│  (lee cv.md)     │
+└────────┬─────────┘
+         │
+    ┌────┼────┐
+    ▼    ▼    ▼
+ Report  PDF  Tracker
+  .md   .pdf   .tsv
+```
+
+## Portales incluidos
+
+El scanner viene con **45+ empresas** pre-configuradas y **19 queries** en los principales portales de empleo. Copia `templates/portals.example.yml` a `portals.yml` y añade las tuyas:
+
+**AI Labs:** Anthropic, OpenAI, Mistral, Cohere, LangChain, Pinecone
+**Voice AI:** ElevenLabs, PolyAI, Parloa, Hume AI, Deepgram, Vapi, Bland AI
+**Plataformas AI:** Retool, Airtable, Vercel, Temporal, Glean, Arize AI
+**Contact Center:** Ada, LivePerson, Sierra, Decagon, Talkdesk, Genesys
+**Enterprise:** Salesforce, Twilio, Gong, Dialpad
+**LLMOps:** Langfuse, Weights & Biases, Lindy, Cognigy, Speechmatics
+**Automatizacion:** n8n, Zapier, Make.com
+**Europa:** Factorial, Attio, Tinybird, Clarity AI, Travelperk
+
+**Portales de empleo:** Ashby, Greenhouse, Lever, Wellfound, Workable, RemoteFront
+
+## Dashboard TUI
+
+El dashboard integrado en terminal te permite navegar tu pipeline visualmente:
 
 ```bash
-npm run verify
+cd dashboard
+go build -o career-dashboard .
+./career-dashboard --path ..
 ```
 
----
+Features: 6 pestañas de filtro, 4 modos de ordenacion, vista agrupada/plana, previews lazy-loaded, cambios de estado inline.
 
-## 🎯 Cómo usar el proyecto
+## Dashboard Web Simple
 
-Tienes **dos formas** de trabajar con career-ops:
-
-### Opción A: Interfaz Web (Recomendado para principiantes)
-
-La forma más visual e intuitiva.
-
-#### Iniciar la aplicación
+Si prefieres una vista rapida en navegador sin compilar Go, puedes generar un HTML estatico desde `data/applications.md`:
 
 ```bash
-npm run dev
+npm run dashboard:web
+npm run dashboard:web:open
 ```
 
-Luego abre en tu navegador:
+Esto crea `output/dashboard.html` con filtros por busqueda, estado, proceso y PDF. La variante `:open` lo abre directamente en tu navegador por defecto.
+
+## Estructura del proyecto
 
 ```
-http://localhost:3000
-```
-
-#### Flujo de trabajo paso a paso
-
-1. **Crear/Seleccionar candidato**: Elige o registra un nuevo perfil
-2. **Subir CV**: Carga tu CV en formato `.pdf` o `.docx`
-3. **Agregar LinkedIn**: Ingresa tu URL de perfil de LinkedIn
-4. **Completar datos**: Rellena información adicional del perfil
-5. **Analizar**: El sistema valida que no falten datos críticos
-6. **Confirmar perfil**: Revisa y confirma tus datos
-7. **Buscar ofertas**: Escanea portales según tus criterios
-8. **Seleccionar**: Elige qué ofertas te interesan
-9. **Generar materiales**: Crea CVs personalizados, textos de presentación
-10. **Enviar o guardar**: 
-    - Envía por correo (vía Outlook)
-    - O guarda localmente en `output/`
-
-#### ¿Qué hace cada paso?
-
-| Paso | Función |
-|------|---------|
-| **Analizar** | Valida completitud del perfil (datos faltantes, CV incompleto) |
-| **Buscar** | Escanea: LinkedIn, Computrabajo, Bumeran, Indeed, HiringRoom |
-| **Generar** | Crea: CV `.md`, CV `.html`, CV `.pdf`, Texto de postulación |
-| **Enviar** | Manda paquete completo por Outlook (requiere instalado) |
-| **Guardar** | Exporta a carpeta local: `output/<candidato>/<batch-id>/` |
-
----
-
-### Opción B: Scripts CLI (Para usuarios avanzados)
-
-Trabaja directamente con comandos si prefieres mayor control.
-
-#### Comandos principales
-
-```bash
-# Análisis y validación
-npm run doctor              # Diagnóstico completo del sistema
-npm run verify              # Chequear integridad del pipeline
-npm run normalize           # Normalizar estados en tracker
-npm run dedup               # Eliminar duplicados
-
-# Búsqueda y evaluación
-npm run scan                # Escanear portales por nuevas ofertas
-npm run liveness            # Verificar si ofertas siguen activas
-
-# Generación de materiales
-npm run pdf                 # Generar PDF desde CV fuente
-npm run merge               # Fusionar múltiples archivos de seguimiento
-
-# Notificaciones
-npm run email-packet        # Enviar paquetes por correo
-```
-
----
-
-## 📁 Archivos importantes
-
-### 👤 Perfil y CV (Personalización)
-
-| Archivo | Descripción |
-|---------|-------------|
-| **`cv.md`** | CV fuente en Markdown (única fuente de verdad) |
-| **`config/profile.yml`** | Datos del candidato: nombre, email, ubicación, objetivos |
-| **`modes/_profile.md`** | Personalizaciones: arquetipos de rol, narrativa, prioridades |
-| **`portals.yml`** | Configuración: portales a escanear, palabras clave de búsqueda |
-
-### 📊 Datos del Pipeline
-
-| Archivo | Descripción |
-|---------|-------------|
-| **`data/applications.md`** | Tracker de postulaciones (fecha, empresa, rol, score, estado) |
-| **`data/pipeline.md`** | Ofertas pendientes por procesar (inbox de URLs) |
-| **`interview-prep/story-bank.md`** | Banco de historias y casos STAR acumulados |
-
-### 🎨 Resultados Generados
-
-| Carpeta | Contenido |
-|---------|----------|
-| **`output/`** | CVs en PDF, HTML, textos de postulación (generados localmente) |
-| **`output/web-batches/`** | Tandas de aplicación creadas desde la web |
-| **`reports/`** | Reportes de evaluación de ofertas (análisis detallado A-F) |
-
-### 💻 Aplicación Web
-
-| Archivo | Función |
-|---------|---------|
-| **`app/`** | Rutas y endpoints de Next.js |
-| **`components/career-workflow.js`** | Interfaz principal de la aplicación |
-| **`lib/career-web.js`** | Lógica de candidatos, búsqueda, generación, envío |
-
-### 🛠️ Herramientas del Sistema
-
-| Script | Propósito |
-|--------|----------|
-| **`generate-pdf.mjs`** | Convierte HTML → PDF (Playwright) |
-| **`scan.mjs`** | Busca ofertas en portales automáticamente |
-| **`email-packet.mjs`** | Envía paquetes de aplicación por correo |
-| **`check-liveness.mjs`** | Verifica si ofertas siguen activas |
-| **`analyze-patterns.mjs`** | Analiza patrones en rechazos y mejora targeting |
-| **`followup-cadence.mjs`** | Calcula y gestiona seguimientos (follow-ups) |
-
----
-
-## 📂 Estructura del repositorio
-
-```
-busquedatrabajo/
-├── app/                        # API y rutas Next.js
-│   ├── api/                    # Endpoints: búsqueda, generación, envío
-│   ├── layout.js               # Layout principal
-│   ├── page.js                 # Home page
-│   └── globals.css             # Estilos globales
-│
-├── components/
-│   └── career-workflow.js      # Interfaz principal de la aplicación
-│
-├── lib/
-│   └── career-web.js           # Lógica central: candidatos, búsqueda, generación
-│
+career-ops/
+├── CLAUDE.md                    # Instrucciones del agente
+├── cv.md                        # Tu CV (crealo tu)
+├── article-digest.md            # Tus proof points (opcional)
 ├── config/
-│   ├── profile.example.yml     # Plantilla de perfil
-│   └── profile.yml             # ⭐ TU PERFIL (personalizado)
-│
-├── data/
-│   ├── applications.md         # ⭐ TRACKER DE POSTULACIONES
-│   ├── pipeline.md             # ⭐ INBOX DE OFERTAS
-│   └── candidates/             # Datos de candidatos
-│
-├── cv.md                       # ⭐ CV FUENTE (en Markdown)
-├── portals.yml                 # ⭐ CONFIGURACIÓN DE BÚSQUEDA
-│
-├── modes/                      # Instrucciones y modos del sistema
-│   ├── _shared.md              # Lógica común (no editar)
-│   ├── _profile.md             # ⭐ TUS PERSONALIZACIONES
-│   ├── oferta.md               # Evaluación de ofertas
-│   ├── apply.md                # Asistente de aplicaciones
-│   └── [otros modos...]
-│
+│   └── profile.example.yml      # Template para tu perfil
+├── modes/                       # 14 modos
+│   ├── _shared.md               # Contexto compartido (personalizable)
+│   ├── oferta.md                # Evaluacion individual
+│   ├── pdf.md                   # Generacion de PDF
+│   ├── scan.md                  # Scanner de portales
+│   ├── batch.md                 # Procesamiento batch
+│   └── ...
 ├── templates/
-│   ├── cv-template.html        # Plantilla HTML para CVs
-│   ├── portals.example.yml     # Plantilla de portales
-│   └── states.yml              # Estados canónicos del tracker
-│
-├── output/                     # 📁 Archivos generados (gitignored)
-│   └── web-batches/            # Tandas de la web
-│
-├── reports/                    # 📁 Reportes de evaluación
-│   └── *.md                    # Análisis detallado A-F de ofertas
-│
-├── interview-prep/             # Preparación de entrevistas
-│   ├── story-bank.md           # Historias STAR acumuladas
-│   └── {company}-{role}.md     # Intel por empresa
-│
-├── batch/                      # Procesamiento en lote
-│   ├── batch-prompt.md         # Prompt para procesamiento paralelo
-│   └── tracker-additions/      # TSV de cambios a mergear
-│
-├── docs/                       # 📖 Documentación
-│   ├── SETUP.md                # Instalación detallada
-│   ├── ARCHITECTURE.md         # Arquitectura del sistema
-│   ├── SCRIPTS.md              # Referencia de scripts
-│   └── CUSTOMIZATION.md        # Cómo personalizar
-│
-├── dashboard/                  # Dashboard TUI (Go)
-│   └── main.go                 # Dashboard alternativo
-│
-├── generate-pdf.mjs            # Generador HTML → PDF
-├── scan.mjs                    # Escaneo de portales
-├── email-packet.mjs            # Envío de paquetes
-├── analyze-patterns.mjs        # Análisis de patrones
-├── followup-cadence.mjs        # Gestor de follow-ups
-├── check-liveness.mjs          # Verificador de ofertas activas
-│
-├── package.json                # Dependencias Node.js
-├── VERSION                     # Versión actual del sistema
-├── CHANGELOG.md                # Historia de cambios
-└── README.md                   # 👈 Este archivo
+│   ├── cv-template.html         # Template de CV ATS-optimizado
+│   ├── portals.example.yml      # Config del scanner
+│   └── states.yml               # Estados canonicos
+├── batch/
+│   ├── batch-prompt.md          # Prompt autocontenido del worker
+│   └── batch-runner.sh          # Script orquestador
+├── dashboard/                   # Visor de pipeline en Go TUI
+├── data/                        # Tus datos de tracking (gitignored)
+├── reports/                     # Reports de evaluacion (gitignored)
+├── output/                      # PDFs generados (gitignored)
+├── fonts/                       # Space Grotesk + DM Sans
+├── docs/                        # Setup, personalizacion, arquitectura
+└── examples/                    # CV de ejemplo, report, proof points
 ```
 
-**⭐ Archivos que debes personalizar:**
-- `cv.md`, `config/profile.yml`, `modes/_profile.md`, `portals.yml`
-- `data/applications.md`, `data/pipeline.md`
+## Tech Stack
 
----
+![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
+![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
 
-## 🚦 Guía rápida de comandos
+- **Agente**: Claude Code con skills y modos personalizados
+- **PDF**: Playwright/Puppeteer + template HTML
+- **Scanner**: Playwright + Greenhouse API + WebSearch
+- **Dashboard**: Go + Bubble Tea + Lipgloss (tema Catppuccin Mocha)
+- **Datos**: Tablas Markdown + config YAML + ficheros TSV batch
 
-### Desarrollo
+## Sobre el autor
 
-```bash
-npm run dev              # Iniciar web local en http://localhost:3000
-npm run build            # Compilar Next.js para producción
-npm run start            # Ejecutar versión compilada
-npm run clean            # Limpiar cache de Next.js
-```
+Soy Santiago -- Head of Applied AI, ex-fundador (monte y vendi un negocio que sigue funcionando con mi nombre). Construi career-ops para gestionar mi propia busqueda de empleo. Funciono: lo use para conseguir mi puesto actual.
 
-### Validación y mantenimiento
+Mi portfolio y otros proyectos open source → [santifer.io](https://santifer.io)
 
-```bash
-npm run doctor           # Diagnóstico completo del sistema
-npm run verify           # Verificar integridad del pipeline
-npm run normalize        # Normalizar estados de aplicaciones
-npm run dedup            # Eliminar duplicados en tracker
-npm run merge            # Fusionar cambios en tracker
-npm run sync-check       # Verificar sincronización CV-profile
-```
+☕ [Invitame a un cafe](https://buymeacoffee.com/santifer) si career-ops te ayudo en tu busqueda.
 
-### Búsqueda y herramientas
+## Documentacion
 
-```bash
-npm run scan             # Escanear portales por nuevas ofertas
-npm run liveness         # Verificar si ofertas están activas
-npm run pdf              # Generar PDF del CV
-npm run email-packet     # Enviar paquete por correo
-npm run update:check     # Verificar actualizaciones disponibles
-npm run update           # Aplicar actualización
-npm run rollback         # Revertir a versión anterior
-```
+- [SETUP.md](docs/SETUP.md) -- Guia de instalacion
+- [CUSTOMIZATION.md](docs/CUSTOMIZATION.md) -- Como personalizar
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) -- Como funciona el sistema
 
----
+## Tambien Open Source
 
-## 📋 Buenas prácticas de uso
+- **[cv-santiago](https://github.com/santifer/cv-santiago)** -- El portfolio (santifer.io) con chatbot IA, dashboard LLMOps y case studies. Si necesitas un portfolio para acompañar tu busqueda de empleo, echale un vistazo.
 
-### Seguridad y privacidad
+## Star History
 
-- ✅ **NO subas datos personales públicamente** si compartirás el repo
-- ✅ **Guarda `config/profile.yml` en `.gitignore`** si vas a hacer commits
-- ✅ **Revisa siempre antes de enviar**: PDF, email, datos personales
-- ✅ **Usa `.gitignore`** para `output/`, `data/`, `reports/`
+<a href="https://www.star-history.com/?repos=santifer%2Fcareer-ops&type=timeline&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&legend=top-left" />
+ </picture>
+</a>
 
-### Calidad de aplicaciones
+## Aviso legal
 
-- 🎯 **Aplica estratégicamente**, no en masa
-- 🎯 **Personaliza siempre**: adapta CV y texto a la oferta
-- 🎯 **Revisa el score**: no apliques a ofertas < 4.0/5 sin razón
-- 🎯 **Menos es más**: 5 aplicaciones buenas > 50 genéricas
+**career-ops es una herramienta local y open source — NO un servicio alojado.** Al usar este software, aceptas que:
 
-### Mantenimiento del sistema
+1. **Tu controlas tus datos.** Tu CV, datos de contacto e informacion personal se quedan en tu maquina y se envian directamente al proveedor de IA que elijas (Anthropic, OpenAI, etc.). No recopilamos, almacenamos ni tenemos acceso a tus datos.
+2. **Tu controlas la IA.** Los prompts por defecto instruyen a la IA a no enviar aplicaciones automaticamente, pero los modelos pueden comportarse de forma impredecible. Si modificas los prompts o usas otros modelos, lo haces bajo tu responsabilidad. **Revisa siempre el contenido generado antes de enviarlo.**
+3. **Tu cumples con los terminos de terceros.** Debes usar esta herramienta de acuerdo con los Terminos de Servicio de los portales de empleo (Greenhouse, Lever, Workday, LinkedIn, etc.). No uses esta herramienta para spamear empresas.
+4. **Sin garantias.** Las evaluaciones son recomendaciones, no verdad absoluta. Los modelos pueden inventar habilidades o experiencia. Los autores no son responsables de resultados laborales, candidaturas rechazadas, restricciones de cuenta ni ninguna otra consecuencia.
 
-- 🔄 **Mantén actualizado**: `npm run update:check` regularmente
-- 🔄 **Valida datos**: `npm run doctor` periódicamente
-- 🔄 **Sincroniza CV**: `npm run sync-check` antes de generar PDFs
-- 🔄 **Normaliza tracker**: `npm run normalize` después de cambios manuales
-
----
-
-## 📚 Documentación adicional
-
-Para información más detallada, consulta:
-
-| Documento | Contenido |
-|-----------|----------|
-| [**docs/SETUP.md**](docs/SETUP.md) | Instalación avanzada y troubleshooting |
-| [**docs/ARCHITECTURE.md**](docs/ARCHITECTURE.md) | Arquitectura interna del sistema |
-| [**docs/SCRIPTS.md**](docs/SCRIPTS.md) | Referencia completa de scripts |
-| [**docs/CUSTOMIZATION.md**](docs/CUSTOMIZATION.md) | Cómo personalizar arquetipos y criterios |
-| [**CHANGELOG.md**](CHANGELOG.md) | Historial de cambios y nuevas features |
-| [**CLAUDE.md**](CLAUDE.md) | Instrucciones para integración con Claude |
-| [**DATA_CONTRACT.md**](DATA_CONTRACT.md) | Contrato de datos: qué no auto-actualizar |
-
----
-
-## 🔗 Enlaces útiles
-
-- 📖 [Documentación oficial](docs/)
-- 💬 [Reportar un bug](https://github.com/Carabantech/busquedatrabajo/issues)
-- 💡 [Sugerencias y features](https://github.com/Carabantech/busquedatrabajo/discussions)
-- 📦 [Historial de versiones](CHANGELOG.md)
-
----
-
-## 👤 Contacto
-
-**Autor/Maintainer:** [@carabantech](https://github.com/carabantech)
-
-¿Preguntas, sugerencias o feedback? Abre un issue o contacta directamente en GitHub.
-
----
-
-## 📜 Licencia
-
-Este proyecto está bajo licencia **MIT**. Consulta [LICENSE](LICENSE) para más detalles.
-
----
-
-## 💪 Contribuciones
-
-¿Quieres mejorar career-ops?
-
-1. Fork el repositorio
-2. Crea una rama: `git checkout -b feature/mi-mejora`
-3. Haz commit: `git commit -m "feat: añade mejora"`
-4. Push: `git push origin feature/mi-mejora`
-5. Abre un Pull Request
-
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
-
----
-
-## ⚖️ Disclaimer
-
-Este sistema está diseñado para **mejorar la calidad de tus aplicaciones**, no para spam masivo. 
-
-**Responsabilidad ética:**
-- Solo aplica a ofertas que realmente te interesan
-- Respeta el tiempo de los reclutadores
-- No uses este sistema para postulaciones sin criterio
-
----
-
-**Creado con ❤️ para simplificar tu búsqueda laboral.**
-
-*Versión: 1.3.0 | Última actualización: Abril 2026*
-- [docs/SCRIPTS.md](docs/SCRIPTS.md)
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- [docs/CUSTOMIZATION.md](docs/CUSTOMIZATION.md)
-- [CLAUDE.md](CLAUDE.md)
-
----
-
-## Estado actual del proyecto
-
-El proyecto ya esta preparado para:
-- correr localmente
-- usar multiples candidatos
-- buscar avisos
-- generar PDFs
-- enviar paquetes por mail
-- exportar tandas a carpeta local
-
----
+Ver [LEGAL_DISCLAIMER.md](LEGAL_DISCLAIMER.md) para mas detalles. Este software se proporciona bajo la [Licencia MIT](LICENSE) "tal cual", sin garantia de ningun tipo.
 
 ## Licencia
 
-MIT. Ver [LICENSE](LICENSE).
+MIT
+
+## Conecta
+
+[![Website](https://img.shields.io/badge/santifer.io-000?style=for-the-badge&logo=safari&logoColor=white)](https://santifer.io)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/santifer)
+[![X](https://img.shields.io/badge/X-000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/santifer)
+[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/8pRpHETxa4)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:hola@santifer.io)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_a_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/santifer)
