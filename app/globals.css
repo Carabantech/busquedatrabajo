@@ -118,6 +118,17 @@ select {
   padding: 16px 6px;
 }
 
+.hero-logo {
+  margin-bottom: 12px;
+}
+
+.hero-logo img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
