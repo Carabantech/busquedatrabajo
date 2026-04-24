@@ -140,14 +140,19 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #f0a05b 0%, #e8884a 50%, #d67a3a 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 13px;
-  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 48px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), transparent);
 }
 
 .hero-copy h1 {
