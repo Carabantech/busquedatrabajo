@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Career Ops Local',
+  title: 'Career Ops',
   description: 'Workflow local para buscar, generar y enviar postulaciones',
   icons: {
     icon: '/favicon.png',
