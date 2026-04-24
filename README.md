@@ -240,6 +240,97 @@ npm run dashboard:web:open
 
 Esto crea `output/dashboard.html` con filtros por busqueda, estado, proceso y PDF. La variante `:open` lo abre directamente en tu navegador por defecto.
 
+## Career Ops Web - Interfaz Interactiva Local
+
+Interfaz moderna y responsiva construida con **Next.js 14+** para gestionar el flujo completo de busqueda de empleo de forma visual e interactiva.
+
+### Inicio rápido
+
+```bash
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+# Abre http://localhost:3000 en tu navegador
+```
+
+### Features
+
+| Feature | Descripcion |
+|---------|-------------|
+| **Múltiples candidatos** | Gestiona perfiles de varios candidatos en paralelo |
+| **Flujo visual por etapas** | Profile → Search → Generate → Send (estados progresivos) |
+| **Búsqueda en portales** | LinkedIn, Computrabajo, Bumeran, Indeed, HiringRoom y más |
+| **Generación de PDFs** | CVs ATS-optimizados personalizados por oferta |
+| **Ranking inteligente** | Score de match automatico basado en perfil y oferta |
+| **Tracking en tiempo real** | Actualización instantánea de estado y progreso |
+| **Dark mode nativo** | Tema oscuro con colores de contraste (cyan accent #62d3da) |
+| **Branding personalizable** | Logo, favicon, colores y links configurables |
+
+### Personalización de branding
+
+#### Logo y favicon
+- Logo: `/public/favicon.png` (56x56px, border-radius 10px)
+- Favicon: Se autocarga en la pestaña del navegador
+- Click en logo o "Career Ops" → abre portfolio (`https://portfoliocarabantech.netlify.app/`)
+
+#### Estilos y colores
+- **Archivo:** `app/globals.css`
+- **Variables CSS:** 
+  - `--accent` (cyan default: #62d3da)
+  - `--bg-top`, `--bg-bottom` (gradiente oscuro)
+  - `--card`, `--card-strong` (fondos de tarjetas)
+  - `--good`, `--warn`, `--purple` (estados de éxito/alerta/info)
+
+#### Cambiar titulo
+- **Archivo:** `app/layout.js` (propiedad `title`)
+- **Componente:** `components/career-workflow.js` (eyebrow text)
+
+### Estructura Next.js
+
+```
+app/
+├── layout.js              # Metadata, favicon, estructura HTML
+├── globals.css            # Estilos globales y tema
+├── page.js                # Página principal
+└── api/                   # Endpoints para upload, búsqueda, generación
+    ├── upload-cv/
+    ├── select-jobs/
+    ├── generate/
+    ├── send/
+    └── ...
+
+components/
+└── career-workflow.js     # Componente principal (estado + UI)
+
+public/
+├── favicon.png            # Logo para favicon
+└── [assets]
+```
+
+### Variables de entorno
+
+Crea `.env.local` en la raíz del proyecto:
+
+```env
+# Opcional: configurar endpoints si usas backend externo
+# NEXT_PUBLIC_API_BASE=http://localhost:3001
+```
+
+### Despliegue
+
+```bash
+# Build para producción
+npm run build
+
+# Verificar build
+npm start
+
+# Desplegar a Vercel (recomendado)
+# npx vercel
+```
+
 ## Estructura del proyecto
 
 ```
@@ -247,6 +338,21 @@ career-ops/
 ├── CLAUDE.md                    # Instrucciones del agente
 ├── cv.md                        # Tu CV (crealo tu)
 ├── article-digest.md            # Tus proof points (opcional)
+├── app/                         # Interfaz Next.js local
+│   ├── layout.js                # Layout root con metadata y favicon
+│   ├── page.js                  # Home page
+│   ├── globals.css              # Estilos globales y tema
+│   └── api/                     # API routes para backend
+│       ├── upload-cv/
+│       ├── select-jobs/
+│       ├── generate/
+│       ├── send/
+│       └── ...
+├── components/
+│   └── career-workflow.js       # Componente principal (estado + UI)
+├── public/
+│   ├── favicon.png              # Logo y favicon
+│   └── [assets]
 ├── config/
 │   └── profile.example.yml      # Template para tu perfil
 ├── modes/                       # 14 modos
@@ -275,12 +381,15 @@ career-ops/
 ## Tech Stack
 
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
 ![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
 
 - **Agente**: Claude Code con skills y modos personalizados
+- **Interfaz Web**: Next.js 14+ + React (local interactivo con dark mode)
 - **PDF**: Playwright/Puppeteer + template HTML
 - **Scanner**: Playwright + Greenhouse API + WebSearch
 - **Dashboard**: Go + Bubble Tea + Lipgloss (tema Catppuccin Mocha)
