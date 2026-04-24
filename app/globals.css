@@ -125,6 +125,17 @@ select {
   margin-bottom: 8px;
 }
 
+.hero-header-link {
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.hero-header-link:hover {
+  opacity: 0.8;
+}
+
 .hero-logo {
   flex-shrink: 0;
 }

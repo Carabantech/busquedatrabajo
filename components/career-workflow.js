@@ -409,12 +409,14 @@ export default function CareerWorkflow() {
     <div className="page-shell">
       <section className="hero-panel">
         <div className="hero-copy">
-          <div className="hero-header">
-            <div className="hero-logo">
-              <img src="/favicon.png" alt="Career Ops Logo" />
+          <a href="https://portfoliocarabantech.netlify.app/" target="_blank" rel="noopener noreferrer" className="hero-header-link">
+            <div className="hero-header">
+              <div className="hero-logo">
+                <img src="/favicon.png" alt="Career Ops Logo" />
+              </div>
+              <span className="eyebrow">Career Ops</span>
             </div>
-            <span className="eyebrow">Career Ops</span>
-          </div>
+          </a>
           <h1>Una herramienta para ayudarte en la busqueda de trabajo, organizar postulaciones y avanzar paso a paso.</h1>
           <p>
             La interfaz ahora guarda multiples candidatos, mejora la lectura visual del flujo y refina la busqueda
