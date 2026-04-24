@@ -75,7 +75,7 @@ Construido por alguien que lo uso para evaluar 740+ ofertas, generar 100+ CVs pe
 ```bash
 # 1. Clonar e instalar
 git clone https://github.com/Carabantech/busquedatrabajo.git
-cd career-ops && npm install
+cd busquedatrabajo && npm install
 npx playwright install chromium   # Necesario para generar PDFs
 
 # 2. Verificar setup
