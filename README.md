@@ -268,12 +268,6 @@ npm run dev
 | **Dark mode nativo** | Tema oscuro con colores de contraste (cyan accent #62d3da) |
 | **Branding personalizable** | Logo, favicon, colores y links configurables |
 
-### Personalización de branding
-
-#### Logo y favicon
-- Logo: `/public/favicon.png` (56x56px, border-radius 10px)
-- Favicon: Se autocarga en la pestaña del navegador
-- Click en logo o "Career Ops" → abre portfolio (`https://portfoliocarabantech.netlify.app/`)
 
 #### Estilos y colores
 - **Archivo:** `app/globals.css`
