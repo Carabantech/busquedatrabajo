@@ -52,7 +52,9 @@ Career-Ops convierte cualquier CLI de IA en un centro de mando de busqueda de em
 
 > **Aviso: las primeras evaluaciones no seran buenas.** El sistema no te conoce todavia. Dale contexto -- tu CV, tu historia profesional, tus proof points, tus preferencias, en que eres bueno, que quieres evitar. Cuanto mas lo nutras, mejor filtra. Piensa en ello como hacer onboarding a un recruiter nuevo: la primera semana necesita conocerte, luego se vuelve invaluable.
 
-Construido por alguien que lo uso para evaluar 740+ ofertas, generar 100+ CVs personalizados, y conseguir un rol de Head of Applied AI. [Lee el case study completo](https://santifer.io/career-ops).
+Proyecto original creado por Santiago (@santifer) para evaluar 740+ ofertas, generar 100+ CVs personalizados, y conseguir un rol de Head of Applied AI. [Lee el case study completo](https://santifer.io/career-ops).
+
+Fork mantenido por **Carabantech** con personalización para la interfaz local Next.js.
 
 ## Features
 
@@ -109,7 +111,7 @@ Si quieres compartir el proyecto o arrancar desde cero sin arrastrar datos perso
 
 ```bash
 git clone https://github.com/Carabantech/busquedatrabajo.git
-cd career-ops
+cd busquedatrabajo
 git checkout clean
 npm install
 npx playwright install chromium
@@ -142,7 +144,7 @@ Flujo sugerido:
 
 # 2. Clonar el fork personal
 git clone https://github.com/TU-USUARIO/busquedatrabajo.git
-cd career-ops
+cd busquedatrabajo
 
 # 3. Añadir el repo principal como upstream
 git remote add upstream https://github.com/Carabantech/busquedatrabajo.git
@@ -328,7 +330,7 @@ npm start
 ## Estructura del proyecto
 
 ```
-career-ops/
+busquedatrabajo/
 ├── CLAUDE.md                    # Instrucciones del agente
 ├── cv.md                        # Tu CV (crealo tu)
 ├── article-digest.md            # Tus proof points (opcional)
@@ -389,13 +391,14 @@ career-ops/
 - **Dashboard**: Go + Bubble Tea + Lipgloss (tema Catppuccin Mocha)
 - **Datos**: Tablas Markdown + config YAML + ficheros TSV batch
 
-## Sobre el autor
+## Sobre el proyecto
 
-Soy Santiago -- Head of Applied AI, ex-fundador (monte y vendi un negocio que sigue funcionando con mi nombre). Construi career-ops para gestionar mi propia busqueda de empleo. Funciono: lo use para conseguir mi puesto actual.
+**Career-Ops** fue creado originalmente por Santiago (@santifer) como herramienta personal para gestionar su busqueda de empleo. Este fork es mantenido por **Carabantech** con mejoras en la interfaz local (Next.js 14+) y personalizaciones para flujos de trabajo específicos.
 
-Mi portfolio y otros proyectos open source → [santifer.io](https://santifer.io)
+**Proyecto original:** [santifer/career-ops](https://github.com/santifer/career-ops)
+**Portfolio del autor:** [santifer.io](https://santifer.io)
 
-☕ [Invitame a un cafe](https://buymeacoffee.com/santifer) si career-ops te ayudo en tu busqueda.
+☕ Si career-ops te ayuda en tu busqueda, considera [invitar a un cafe](https://buymeacoffee.com/santifer) al autor original.
 
 ## Documentacion
 
@@ -409,11 +412,11 @@ Mi portfolio y otros proyectos open source → [santifer.io](https://santifer.io
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=santifer%2Fcareer-ops&type=timeline&legend=top-left">
+<a href="https://www.star-history.com/?repos=Carabantech%2Fbusquedatrabajo&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=santifer/career-ops&type=timeline&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Carabantech/busquedatrabajo&type=timeline&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Carabantech/busquedatrabajo&type=timeline&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Carabantech/busquedatrabajo&type=timeline&legend=top-left" />
  </picture>
 </a>
 
